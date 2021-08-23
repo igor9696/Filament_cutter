@@ -136,7 +136,7 @@ void stepper_update(stepper_motor *motor)
 {
 	switch(motor->state)
 	{
-
+		// blalblalblaafdsdrf
 	}
 }
 
