@@ -33,6 +33,7 @@
 #include "stdio.h"
 #include "menu_LCD.h"
 #include "L298_dc.h"
+#include "filament_cutter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,6 +43,7 @@ stepper_dir DIR = CW;
 
 dc_motor DC_motor = { 0 };
 cursor_position cursor_pos;
+extern filament_cutter FC_struct;
 
 /* USER CODE END PTD */
 
@@ -62,6 +64,7 @@ uint16_t message[32];
 uint8_t length;
 uint16_t enc_value = 0;
 uint16_t DC_enc_value = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -119,20 +122,18 @@ int main(void)
   DC_motor_Init(&DC_motor, &htim16, TIM_CHANNEL_1, CUT_DIR_IN1_GPIO_Port,
   CUT_DIR_IN1_Pin, CUT_DIR_IN2_GPIO_Port, CUT_DIR_IN2_Pin, &hlptim1);
   Init_menu(&cursor_pos);
-  //stepper_meters_to_rotations(&extruder, 1, 10, DIR);
+  Filament_Cutter_Init(&extruder, &DC_motor);
 
-  stepper_extrude_weight(&extruder, 10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	//stepper_set_angle(&extruder, 360, 10, DIR);
-	//DC_set_angle(&DC_motor, 360, 50, DIR);
+
 	while (1)
 	{
-
 		ENC_Button_Action(&cursor_pos);
 		menu_update(&cursor_pos);
+		motors_update(&extruder, &DC_motor);
 
     /* USER CODE END WHILE */
 
@@ -190,10 +191,13 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim) {
+void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
+{
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hlptim);
 	DC_stop(&DC_motor);
+	CUTTING_PROCESS_FLAG = 0;
+	FC_struct.mode = STANDBY;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -204,6 +208,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			stepper_stop(&extruder);
 			EXTRUDE_PROCESS_FLAG = 0;
+			FC_struct.mode = CUTTING;
 		}
 	}
 }
