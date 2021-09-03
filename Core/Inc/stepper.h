@@ -8,6 +8,8 @@
 #ifndef INC_STEPPER_H_
 #define INC_STEPPER_H_
 
+#include "L298_dc.h"
+
 #define STEPEER_MOTOR_MAX_FREQ_HZ 		(MICRO_STEP * 1000)
 #define STEPPER_MOTOR_MIN_FREQ_HZ 		1
 #define STEPPER_MOTOR_MAX_SPEED 		100
@@ -21,14 +23,6 @@
 
 volatile uint8_t FIRST_MISS_FLAG;
 volatile uint8_t EXTRUDE_PROCESS_FLAG;
-volatile uint8_t CUTTING_PROCESS_FLAG;
-
-typedef enum filament_cutter_mode
-{
-	STANDBY,
-	EXTRUDE,
-	CUTTING,
-}filament_cutter_mode;
 
 
 

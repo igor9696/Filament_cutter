@@ -6,6 +6,7 @@
  */
 #include "main.h"
 #include "stepper.h"
+#include "filament_cutter.h"
 
 
 void stepper_init(stepper_motor *motor, TIM_HandleTypeDef *htim, uint32_t channel,
@@ -123,21 +124,13 @@ void stepper_extrude_weight(stepper_motor *motor, uint16_t weight)
 	{
 		EXTRUDE_PROCESS_FLAG = 1;
 		uint32_t meters;
-		meters = stepper_grams_to_meters(motor, weight, 1.75, 1.24, 20);
+		meters = stepper_grams_to_meters(motor, weight, 1.75, 1.24, 15);
 		stepper_meters_to_rotations(motor, meters, 20, CW);
 
-
 	}
 
 }
 
 
-void stepper_update(stepper_motor *motor)
-{
-	switch(motor->state)
-	{
-
-	}
-}
 
 

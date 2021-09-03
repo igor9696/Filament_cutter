@@ -12,6 +12,7 @@
 
 
 #define FULL_ROTATION_PULSE (2*2249)
+volatile uint8_t CUTTING_PROCESS_FLAG;
 
 
 

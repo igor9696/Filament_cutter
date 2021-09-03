@@ -73,8 +73,13 @@ uint16_t DC_get_encoder_counter(dc_motor *motor)
 
 void DC_set_angle(dc_motor *motor, uint16_t angle, uint8_t speed, DC_direction DIR)
 {
-	uint16_t pulses_to_count;
-	pulses_to_count = (angle * FULL_ROTATION_PULSE) / 360;
-	__HAL_LPTIM_AUTORELOAD_SET(motor->encoder_timer, pulses_to_count);
-	DC_rotate(motor, DIR, speed);
+	if(CUTTING_PROCESS_FLAG == 0)
+	{
+		CUTTING_PROCESS_FLAG = 1;
+		uint16_t pulses_to_count;
+		pulses_to_count = (angle * FULL_ROTATION_PULSE) / 360;
+		__HAL_LPTIM_AUTORELOAD_SET(motor->encoder_timer, pulses_to_count);
+		DC_rotate(motor, DIR, speed);
+	}
+
 }
