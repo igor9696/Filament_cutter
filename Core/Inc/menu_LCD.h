@@ -76,5 +76,6 @@ void menu_update(cursor_position* curr_position);
 void default_screen();
 void settings_screen();
 void diameter_screen();
+void density_screen();
 
 #endif /* INC_MENU_LCD_H_ */

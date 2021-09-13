@@ -177,8 +177,8 @@ void update_third_layer(cursor_position* curr_position)
 			DrawFilledRectangle(0, 0, 79, 14);
 			ST7920_Update();
 			ST7920_GraphicMode(0);
-
 			break;
+
 		case DIAMETER_285:
 			ST7920_GraphicMode(1);
 			ST7920_Clear();
@@ -190,14 +190,47 @@ void update_third_layer(cursor_position* curr_position)
 			DrawFilledRectangle(0, 15, 79, 15);
 			ST7920_Update();
 			ST7920_GraphicMode(0);
+			break;
 
-			break;
 		case DENSITY_PLA:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			density_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 0, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
 			break;
+
 		case DENSITY_ABS:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			density_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 15, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
 			break;
+
 		case DENSITY_PETG:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			density_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 30, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
 			break;
+
 		case WEIGHT:
 			break;
 		case QTY:
@@ -334,9 +367,6 @@ void update_enc(cursor_position* curr_position)
 
 	else if(curr_position->current_layer == THIRD_LAYER)
 	{
-
-
-
 		if(curr_position->SL_position == FIL_DIA)
 		{
 			if((enc_value >= 0) & (enc_value < 4))
@@ -350,6 +380,31 @@ void update_enc(cursor_position* curr_position)
 
 			}
 		}
+
+		if(curr_position->SL_position == FIL_DEN)
+		{
+
+			if((enc_value >= 0) & (enc_value < 4))
+			{
+				curr_position->TL_position = DENSITY_PLA;
+			}
+
+			else if((enc_value >= 4) & (enc_value < 8))
+			{
+				curr_position->TL_position = DENSITY_ABS;
+
+			}
+			else if((enc_value >= 8) & (enc_value <= 20))
+			{
+				curr_position->TL_position = DENSITY_PETG;
+			}
+
+		}
+
+
+
+
+
 
 	}
 
@@ -390,12 +445,20 @@ void diameter_screen()
 {
 	ST7920_SendString(0, 0, "1.75 mm");
 	ST7920_SendString(1, 0, "2.85 mm");
-	ST7920_SendString(3, 3, "BACK");
 }
 
 
+void density_screen()
+{
+	ST7920_SendString(0, 0, "1. PLA");
+	ST7920_SendString(1, 0, "2. ABS");
+	ST7920_SendString(2, 0, "3. PETG");
+}
 
 
+void weight_screen()
+{
 
+}
 
 
