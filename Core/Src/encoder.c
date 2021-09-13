@@ -155,10 +155,61 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = DENSITY_PLA;
 		}
+	}
+
+	else if(cursor_pos->current_layer == THIRD_LAYER)
+	{
+		if(cursor_pos->TL_position == DIAMETER_175)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DIA;
+			// do smth
+			// save data to struct
+
+		}
+
+		else if(cursor_pos->TL_position == DIAMETER_285)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DIA;
+			// do smth
+			// save data to struct
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_PLA)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DEN;
+			// do smth
+			// save data to struct
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_ABS)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DEN;
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_PETG)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = FIL_DEN;
+		}
+
+		else if(cursor_pos->TL_position == WEIGHT)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = DIAMETER_175;
+		}
+
+		else if(cursor_pos->TL_position == QTY)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = DENSITY_PLA;
+		}
 
 
 	}
-
 
 
 }

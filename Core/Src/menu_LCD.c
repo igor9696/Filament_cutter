@@ -401,9 +401,16 @@ void update_enc(cursor_position* curr_position)
 
 		}
 
+		if(curr_position->SL_position == SAMPLE_WEIGHT)
+		{
+			// do smth
+		}
 
 
-
+		if(curr_position->SL_position == QUANTITY)
+		{
+			// do smth
+		}
 
 
 	}
