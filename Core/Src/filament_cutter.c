@@ -15,10 +15,11 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 	FC_struct.motor = motor;
 	FC_struct.dc_motor = dc_motor;
 	FC_struct.mode = STANDBY;
-	FC_params.filament_density = 1.24;
-	FC_params.filament_diameter = 1.75;
+	FC_params.filament_density = Filament_density_PLA;
+	FC_params.filament_diameter = Filament_diameter_175;
 	FC_params.sample_quantities = 1;
-	FC_params.target_weight = 5;
+	FC_params.target_weight = Sample_weight_5g;
+	FC_params.current_length_cm = 0;
 	FC_struct.parameters = FC_params;
 }
 

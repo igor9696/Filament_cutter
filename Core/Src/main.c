@@ -198,6 +198,8 @@ void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
 	DC_stop(&DC_motor);
 	CUTTING_PROCESS_FLAG = 0;
 	FC_struct.mode = STANDBY;
+	cursor_pos.FL_position = DEFAULT;
+
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)

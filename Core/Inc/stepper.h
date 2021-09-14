@@ -16,7 +16,7 @@
 #define MICRO_STEP 						1
 #define STEP_PER_REVOLUTION 			200
 #define JAGGER_DIAMETER					11		// milimeters
-#define FULL_ROTATION_LENGTH			0.033
+#define FULL_ROTATION_LENGTH			(2*3.14*JAGGER_DIAMETER/2) // milimeters
 
 
 
@@ -80,7 +80,7 @@ void stepper_stop(stepper_motor *motor);
 void stepper_set_dir(stepper_motor *motor, stepper_dir direction);
 void stepper_set_speed(stepper_motor *motor, uint32_t speed);
 void stepper_set_angle(stepper_motor *motor, uint32_t angle, uint32_t speed, stepper_dir dir);
-void stepper_meters_to_rotations(stepper_motor *motor, uint32_t meters, uint32_t speed, stepper_dir dir);
+void stepper_centimeters_to_rotations(stepper_motor *motor, uint32_t centimeters, uint32_t speed, stepper_dir dir);
 void stepper_extrude_weight(stepper_motor *motor, uint16_t weight);
 
 #endif /* INC_STEPPER_H_ */

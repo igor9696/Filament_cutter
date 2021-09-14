@@ -12,6 +12,17 @@
 #include "stepper.h"
 #include "L298_dc.h"
 
+#define Filament_diameter_175		1.75
+#define Filament_diameter_285		2.85
+#define Filament_density_PLA		1.24
+#define Filament_density_ABS		1.04
+#define Filament_density_PETG		1.23
+
+#define Sample_weight_5g			5
+#define Sample_weight_25g			25
+#define Sample_weight_50g			50
+#define Sample_weight_100g			100
+
 
 typedef enum filament_cutter_mode
 {
@@ -27,6 +38,7 @@ typedef struct FC_parameters
 	float		 	filament_diameter;
 	uint16_t 		target_weight;
 	uint8_t 		sample_quantities;
+	uint16_t		current_length_cm;
 
 
 }FC_parameters;
@@ -38,6 +50,7 @@ typedef struct filament_cutter
 	FC_parameters				parameters;
 	dc_motor                    *dc_motor;
 	stepper_motor 				*motor;
+
 
 }filament_cutter;
 

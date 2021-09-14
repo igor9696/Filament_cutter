@@ -9,6 +9,11 @@
 #include "menu_LCD.h"
 #include "ST7920_SERIAL.h"
 #include "encoder.h"
+#include "filament_cutter.h"
+
+
+extern filament_cutter FC_struct;
+
 
 void update_first_layer(cursor_position* curr_position)
 {
@@ -35,12 +40,23 @@ void update_first_layer(cursor_position* curr_position)
 			ST7920_GraphicMode(0);
 			break;
 
+			case ACTIVE_START:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			active_start_screen();
+
+
+			break;
+
+
 			case STOP:
-			default_screen();
+			active_start_screen();
 
 			// highlighting
 			ST7920_GraphicMode(1);
-			DrawFilledRectangle(0, 50, 35, 16);
+			DrawFilledRectangle(48, 50, 35, 16);
 			ST7920_Update();
 			ST7920_GraphicMode(0);
 			break;
@@ -231,10 +247,65 @@ void update_third_layer(cursor_position* curr_position)
 			ST7920_GraphicMode(0);
 			break;
 
-		case WEIGHT:
+		case WEIGHT_5g:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			weight_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 0, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
 			break;
+
+		case WEIGHT_25g:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			weight_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 15, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
+			break;
+
+		case WEIGHT_50g:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			weight_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 30, 79, 16);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
+			break;
+
+		case WEIGHT_100g:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
+			weight_screen();
+
+			ST7920_GraphicMode(1);
+			DrawFilledRectangle(0, 48, 79, 14);
+			ST7920_Update();
+			ST7920_GraphicMode(0);
+			break;
+
 		case QTY:
+			ST7920_GraphicMode(1);
+			ST7920_Clear();
+			ST7920_GraphicMode(0);
+			ST7920_Clear();
 			break;
+
 		default:
 			break;
 
@@ -245,9 +316,6 @@ void update_third_layer(cursor_position* curr_position)
 	}
 
 }
-
-
-
 
 
 
@@ -274,31 +342,19 @@ void menu_update(cursor_position* curr_position)
 		update_third_layer(curr_position);
 	}
 
-
-
-
 }
 
 
 void Init_menu(cursor_position* curr_position)
 {
 	curr_position->FL_position = DEFAULT;
-
 	curr_position->SL_position = FIL_DIA;
-
 	curr_position->TL_position = DIAMETER_175;
-
 	curr_position->FL_prev_position = START;
-
 	curr_position->SL_prev_position = NONE;
-
 	curr_position->TL_prev_position = NONE;
-
-
 	curr_position->current_layer = FIRST_LAYER;
-
 	menu_update(curr_position);
-
 }
 
 
@@ -311,6 +367,9 @@ void update_enc(cursor_position* curr_position)
 
 	if(curr_position->current_layer == FIRST_LAYER)
 	{
+
+		if(!(FC_struct.mode != STANDBY))
+		{
 
 			if((enc_value >=0) & (enc_value < 4))
 			{
@@ -326,11 +385,12 @@ void update_enc(cursor_position* curr_position)
 			{
 				curr_position->FL_position = START;
 			}
+		}
 
-			else if((enc_value >= 12) & (enc_value < 16))
-			{
-				curr_position->FL_position = STOP;
-			}
+		else if((enc_value >= 8) & (enc_value < 20))
+		{
+			curr_position->FL_position = STOP;
+		}
 
 	}
 
@@ -381,7 +441,7 @@ void update_enc(cursor_position* curr_position)
 			}
 		}
 
-		if(curr_position->SL_position == FIL_DEN)
+		else if(curr_position->SL_position == FIL_DEN)
 		{
 
 			if((enc_value >= 0) & (enc_value < 4))
@@ -401,15 +461,34 @@ void update_enc(cursor_position* curr_position)
 
 		}
 
-		if(curr_position->SL_position == SAMPLE_WEIGHT)
+		else if(curr_position->SL_position == SAMPLE_WEIGHT)
 		{
-			// do smth
+			if((enc_value >= 0) & (enc_value < 4))
+			{
+				curr_position->TL_position = WEIGHT_5g;
+			}
+
+			else if((enc_value >= 4) & (enc_value < 8))
+			{
+				curr_position->TL_position = WEIGHT_25g;
+
+			}
+			else if((enc_value >= 8) & (enc_value < 12))
+			{
+				curr_position->TL_position = WEIGHT_50g;
+			}
+
+			else if((enc_value >= 12) & (enc_value < 20))
+			{
+				curr_position->TL_position = WEIGHT_100g;
+			}
+
 		}
 
 
-		if(curr_position->SL_position == QUANTITY)
+		else if(curr_position->SL_position == QUANTITY)
 		{
-			// do smth
+				// do smth
 		}
 
 
@@ -430,7 +509,7 @@ void default_screen()
 	ST7920_Update();
 	ST7920_GraphicMode(0);
 	ST7920_SendString(1,0,"1.Settings");
-	ST7920_SendString(3,0,"STOP");
+	//ST7920_SendString(3,0,"STOP");
 	ST7920_SendString(3,5," START");
 
 }
@@ -450,22 +529,87 @@ void settings_screen()
 
 void diameter_screen()
 {
-	ST7920_SendString(0, 0, "1.75 mm");
-	ST7920_SendString(1, 0, "2.85 mm");
+	if(FC_struct.parameters.filament_diameter == Filament_diameter_175)
+	{
+		ST7920_SendString(0, 0, "1.75 mm <<");
+		ST7920_SendString(1, 0, "2.85 mm");
+	}
+
+	if(FC_struct.parameters.filament_density == Filament_diameter_285)
+	{
+		ST7920_SendString(0, 0, "1.75 mm");
+		ST7920_SendString(1, 0, "2.85 mm <<");
+	}
 }
 
 
 void density_screen()
 {
-	ST7920_SendString(0, 0, "1. PLA");
-	ST7920_SendString(1, 0, "2. ABS");
-	ST7920_SendString(2, 0, "3. PETG");
+	if(FC_struct.parameters.filament_density == (float)Filament_density_PLA)
+	{
+		ST7920_SendString(0, 0, "1. PLA <<");
+		ST7920_SendString(1, 0, "2. ABS");
+		ST7920_SendString(2, 0, "3. PETG");
+	}
+
+	if(FC_struct.parameters.filament_density == (float)Filament_density_ABS)
+	{
+		ST7920_SendString(0, 0, "1. PLA");
+		ST7920_SendString(1, 0, "2. ABS <<");
+		ST7920_SendString(2, 0, "3. PETG");
+	}
+
+	if(FC_struct.parameters.filament_density == (float)Filament_density_ABS)
+	{
+		ST7920_SendString(0, 0, "1. PLA");
+		ST7920_SendString(1, 0, "2. ABS");
+		ST7920_SendString(2, 0, "3. PETG <<");
+	}
 }
 
 
 void weight_screen()
 {
+	if(FC_struct.parameters.target_weight == Sample_weight_5g)
+	{
+		ST7920_SendString(0, 0, "5g <<");
+		ST7920_SendString(1, 0, "25g");
+		ST7920_SendString(2, 0, "50g");
+		ST7920_SendString(3, 0, "100g");
+	}
 
+	if(FC_struct.parameters.target_weight == Sample_weight_25g)
+	{
+		ST7920_SendString(0, 0, "5g");
+		ST7920_SendString(1, 0, "25g <<");
+		ST7920_SendString(2, 0, "50g");
+		ST7920_SendString(3, 0, "100g");
+	}
+
+	if(FC_struct.parameters.target_weight == Sample_weight_50g)
+	{
+		ST7920_SendString(0, 0, "5g");
+		ST7920_SendString(1, 0, "25g");
+		ST7920_SendString(2, 0, "50g <<");
+		ST7920_SendString(3, 0, "100g");
+	}
+
+	if(FC_struct.parameters.target_weight == Sample_weight_100g)
+	{
+		ST7920_SendString(0, 0, "5g");
+		ST7920_SendString(1, 0, "25g");
+		ST7920_SendString(2, 0, "50g");
+		ST7920_SendString(3, 0, "100g <<");
+	}
 }
 
+void active_start_screen()
+{
+	ST7920_SendString(0, 0, "Working...");
+	ST7920_SendString(1, 0, "0/500 [cm]");
+	ST7920_SendString(3, 3, "STOP");
+
+
+
+}
 
