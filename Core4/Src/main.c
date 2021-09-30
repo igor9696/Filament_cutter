@@ -26,13 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "delay.h"
-#include "ST7920_SERIAL.h"
-#include "stepper.h"
-#include "encoder.h"
-#include "stdio.h"
-#include "menu_LCD.h"
-#include "L298_dc.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +35,7 @@ stepper_motor extruder = { 0 };
 stepper_dir DIR = CW;
 
 dc_motor DC_motor = { 0 };
+encoder_button enc_btn;
 cursor_position cursor_pos;
 
 /* USER CODE END PTD */
@@ -111,7 +106,7 @@ int main(void)
   MX_TIM16_Init();
   MX_LPTIM1_Init();
   /* USER CODE BEGIN 2 */
-	encoder_init( ENC_BTN_GPIO_Port, ENC_BTN_Pin, 20);
+	encoder_init(&enc_btn, ENC_BTN_GPIO_Port, ENC_BTN_Pin, 20);
 	delay_init();
 	ST7920_Init();
 	stepper_init(&extruder, &htim1, TIM_CHANNEL_1, &htim2, EXT_DIR_GPIO_Port,
@@ -126,10 +121,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	stepper_set_angle(&extruder, 360, 10, DIR);
 	DC_set_angle(&DC_motor, 360, 50, DIR);
-	while (1)
-	{
+	while (1) {
 
-		ENC_Button_Action( &cursor_pos);
+		ENC_Button_Action(&enc_btn, &cursor_pos);
 		menu_update(&cursor_pos);
 
     /* USER CODE END WHILE */
@@ -194,12 +188,9 @@ void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim) {
 	DC_stop(&DC_motor);
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	if(FIRST_MISS_FLAG == 1)
-	{
-		if (htim->Instance == extruder.slave_timer.htim->Instance)
-		{
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (FIRST_MISS_FLAG == 1) {
+		if (htim->Instance == extruder.slave_timer.htim->Instance) {
 			stepper_stop(&extruder);
 		}
 	}

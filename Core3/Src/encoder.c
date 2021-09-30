@@ -12,17 +12,15 @@
 #include "L298_dc.h"
 
 
-static encoder_button enc_btn;
-
-void encoder_init(GPIO_TypeDef* GPIO_BTN_PORT, uint16_t Button_Pin, uint32_t debounce_time)
+void encoder_init(encoder_button* enc_btn, GPIO_TypeDef* GPIO_BTN_PORT, uint16_t Button_Pin, uint32_t debounce_time)
 {
-	enc_btn.PORT = GPIO_BTN_PORT;
-	enc_btn.PIN = Button_Pin;
-	enc_btn.debounce_time = debounce_time;
-	enc_btn.BTN_state = DEFA;
-	enc_btn.last_tick = 0;
+	enc_btn->PORT = GPIO_BTN_PORT;
+	enc_btn->PIN = Button_Pin;
+	enc_btn->debounce_time = debounce_time;
+	enc_btn->BTN_state = DEFA;
+	enc_btn->last_tick = 0;
 
-	ENC_Button_RegisterPressCallback(&ENC_Button_PressedTask);
+	ENC_Button_RegisterPressCallback(enc_btn, &ENC_Button_PressedTask);
 
 	__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 19);
 	HAL_TIM_Encoder_Start(_ENC_TIMER, TIM_CHANNEL_ALL);
@@ -35,29 +33,29 @@ uint32_t enc_get_counter()
 }
 
 
-void ENC_Button_RegisterPressCallback(void *callback)
+void ENC_Button_RegisterPressCallback(encoder_button* enc_btn, void *callback)
 {
-	enc_btn.ButtonPressed = callback;
+	enc_btn->ButtonPressed = callback;
 
 }
 
 
-void ENC_Button_DebounceRoutine(cursor_position* cur_postion)
+void ENC_Button_DebounceRoutine(encoder_button* enc_btn, cursor_position* cur_postion)
 {
-	if((HAL_GetTick() - enc_btn.last_tick) > enc_btn.debounce_time)
+	if((HAL_GetTick() - enc_btn->last_tick) > enc_btn->debounce_time)
 	{
 		if(HAL_GPIO_ReadPin(ENC_BTN_GPIO_Port, ENC_BTN_Pin) == GPIO_PIN_RESET)
 		{
-			enc_btn.BTN_state = PRESSED;
-			if(enc_btn.ButtonPressed != NULL)
+			enc_btn->BTN_state = PRESSED;
+			if(enc_btn->ButtonPressed != NULL)
 			{
-				enc_btn.ButtonPressed(cur_postion);
+				enc_btn->ButtonPressed(enc_btn, cur_postion);
 			}
 		}
 
 		else
 		{
-			enc_btn.BTN_state = DEFA;
+			enc_btn->BTN_state = DEFA;
 		}
 
 	}
@@ -65,45 +63,44 @@ void ENC_Button_DebounceRoutine(cursor_position* cur_postion)
 }
 
 
-void ENC_Button_IdleRoutine()
+void ENC_Button_IdleRoutine(encoder_button* enc_btn)
 {
 	if(HAL_GPIO_ReadPin(ENC_BTN_GPIO_Port, ENC_BTN_Pin) == GPIO_PIN_RESET)
 	{
-		enc_btn.last_tick = HAL_GetTick();
-		enc_btn.BTN_state = DEBOUNCE;
+		enc_btn->last_tick = HAL_GetTick();
+		enc_btn->BTN_state = DEBOUNCE;
 	}
 }
 
 
-void ENC_Button_PressedRoutine()
+void ENC_Button_PressedRoutine(encoder_button* enc_btn)
 {
 	if(HAL_GPIO_ReadPin(ENC_BTN_GPIO_Port, ENC_BTN_Pin) == GPIO_PIN_SET)
 	{
-		enc_btn.BTN_state = DEFA;
+		enc_btn->BTN_state = DEFA;
 	}
 }
 
 
-void ENC_Button_Action(cursor_position* cur_postion)
+void ENC_Button_Action(encoder_button* enc_btn, cursor_position* cur_postion)
 {
-	switch(enc_btn.BTN_state)
+	switch(enc_btn->BTN_state)
 	{
 	case DEFA:
-		ENC_Button_IdleRoutine();
+		ENC_Button_IdleRoutine(enc_btn);
 		break;
 	case DEBOUNCE:
-		ENC_Button_DebounceRoutine(cur_postion);
+		ENC_Button_DebounceRoutine(enc_btn, cur_postion);
 		break;
 	case PRESSED:
-		ENC_Button_PressedRoutine();
+		ENC_Button_PressedRoutine(enc_btn);
 		break;
 	}
 }
 
 
 
-//void ENC_Button_PressedTask(encoder_button* enc_btn, cursor_position* cursor_pos)
-void ENC_Button_PressedTask(cursor_position* cursor_pos)
+void ENC_Button_PressedTask(encoder_button* enc_btn, cursor_position* cursor_pos)
 {
 	if(cursor_pos->current_layer == FIRST_LAYER)
 	{

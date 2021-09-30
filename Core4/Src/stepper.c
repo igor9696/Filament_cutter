@@ -4,8 +4,9 @@
  *  Created on: Jul 7, 2021
  *      Author: igur
  */
-#include "main.h"
 #include "stepper.h"
+
+#include "main.h"
 
 
 void stepper_init(stepper_motor *motor, TIM_HandleTypeDef *htim, uint32_t channel,

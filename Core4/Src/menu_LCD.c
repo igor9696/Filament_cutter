@@ -5,10 +5,10 @@
  *      Author: DELL
  */
 
-#include "main.h"
-#include "menu_LCD.h"
-#include "ST7920_SERIAL.h"
-#include "encoder.h"
+#include <encoder.h>
+#include <main.h>
+#include <menu_LCD.h>
+#include <ST7920_SERIAL.h>
 
 
 
