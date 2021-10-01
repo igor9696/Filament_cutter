@@ -25,10 +25,11 @@ void stepper_init(stepper_motor *motor, TIM_HandleTypeDef *htim, uint32_t channe
 void stepper_stop(stepper_motor *motor)
 {
 	motor->mode = IDLE;
-
+	HAL_GPIO_WritePin(EXTRD_SLEEP_GPIO_Port, EXTRD_SLEEP_Pin, GPIO_PIN_RESET);
 	__HAL_TIM_SET_COMPARE(motor->timer.htim, motor->timer.channel, 0);
 	HAL_TIM_PWM_Stop(motor->timer.htim, motor->timer.channel);
 	HAL_TIM_Base_Stop_IT(motor->slave_timer.htim);
+
 }
 
 void stepper_set_dir(stepper_motor *motor, stepper_dir direction)
@@ -100,30 +101,31 @@ void stepper_set_angle(stepper_motor *motor, uint32_t angle, uint32_t speed, ste
 void stepper_centimeters_to_rotations(stepper_motor *motor, uint32_t centimeters, uint32_t speed, stepper_dir dir)
 {
 	uint32_t target_angle;
-	target_angle = (uint32_t)centimeters / (FULL_ROTATION_LENGTH * 0.1);
+	target_angle = (uint32_t)centimeters / (FULL_ROTATION_LENGTH_CM);
 	target_angle *= 360;
 	stepper_set_angle(motor, target_angle, speed, dir);
 }
 
 
-uint32_t stepper_grams_to_centimeters(stepper_motor *motor, uint16_t grams, float filament_diameter, float filament_density, uint32_t speed)
+uint32_t stepper_grams_to_centimeters(stepper_motor *motor, uint16_t grams, float filament_diameter, float filament_density)
 {
-	// dlugosc = 4*waga/ (density * PI * srednica_fil * srednica fil)
-	uint32_t length;
-	length = 4*grams / (filament_density * 3.14 * filament_diameter * filament_diameter);
+	// dlugosc[m] = 4*waga[g]/ (density[g/cm3] * PI * srednica_fil[mm] * srednica fil[mm])
+	float length;
+	length = (4*grams)/ (filament_density * 3.14 * filament_diameter * filament_diameter);
 	FC_struct.parameters.current_length_cm = length * 100;
-	return length * 100;
-
+	return truncf(length * 100);
 }
 
-void stepper_extrude_weight(stepper_motor *motor, uint16_t weight)
+void stepper_extrude_weight(stepper_motor *motor)
 {
 	if(EXTRUDE_PROCESS_FLAG == 0)
 	{
+		printf("Start Extrude\n");
+		CUTTING_PROCESS_FLAG = 0;
 		EXTRUDE_PROCESS_FLAG = 1;
 		uint32_t centimeters;
-		centimeters = stepper_grams_to_centimeters(motor, weight, 1.75, 1.24, 15);
-		stepper_centimeters_to_rotations(motor, centimeters, 40, CW);
+		centimeters = stepper_grams_to_centimeters(motor, FC_struct.parameters.target_weight, FC_struct.parameters.filament_diameter, FC_struct.parameters.filament_density);
+		stepper_centimeters_to_rotations(motor, centimeters, 80, CW);
 	}
 
 }

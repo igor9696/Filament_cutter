@@ -11,9 +11,10 @@
 #include "main.h"
 
 
+
 #define FULL_ROTATION_PULSE (2*2249)
 volatile uint8_t CUTTING_PROCESS_FLAG;
-
+extern volatile uint8_t EXTRUDE_PROCESS_FLAG;
 
 
 

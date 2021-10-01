@@ -83,5 +83,6 @@ void diameter_screen();
 void density_screen();
 void weight_screen();
 void active_start_screen();
+void quantity_screen();
 
 #endif /* INC_MENU_LCD_H_ */

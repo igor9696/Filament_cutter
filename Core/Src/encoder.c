@@ -129,6 +129,10 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		{
 			stepper_stop(&extruder);
 			DC_stop(&DC_motor);
+
+			EXTRUDE_PROCESS_FLAG = 0;
+			CUTTING_PROCESS_FLAG = 0;
+
 			FC_struct.mode = STANDBY;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			cursor_pos->FL_position = DEFAULT;

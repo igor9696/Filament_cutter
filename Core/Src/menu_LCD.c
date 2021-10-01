@@ -13,6 +13,7 @@
 
 
 extern filament_cutter FC_struct;
+extern dc_motor DC_motor;
 
 
 void update_first_layer(cursor_position* curr_position)
@@ -22,6 +23,7 @@ void update_first_layer(cursor_position* curr_position)
 		switch(curr_position->FL_position)
 		{
 			case DEFAULT:
+			DC_stop(&DC_motor);
 			ST7920_GraphicMode(1);
 			ST7920_Clear();
 			ST7920_GraphicMode(0);
@@ -304,6 +306,9 @@ void update_third_layer(cursor_position* curr_position)
 			ST7920_Clear();
 			ST7920_GraphicMode(0);
 			ST7920_Clear();
+
+			quantity_screen();
+
 			break;
 
 		default:
@@ -545,21 +550,21 @@ void diameter_screen()
 
 void density_screen()
 {
-	if(FC_struct.parameters.filament_density == (float)Filament_density_PLA)
+	if(FC_struct.parameters.filament_density >= (Filament_density_PLA-0.001) && (FC_struct.parameters.filament_density <= Filament_density_PLA+0.001))
 	{
 		ST7920_SendString(0, 0, "1. PLA <<");
 		ST7920_SendString(1, 0, "2. ABS");
 		ST7920_SendString(2, 0, "3. PETG");
 	}
 
-	if(FC_struct.parameters.filament_density == (float)Filament_density_ABS)
+	if(FC_struct.parameters.filament_density >= (Filament_density_ABS-0.001) && (FC_struct.parameters.filament_density <= Filament_density_ABS+0.001))
 	{
 		ST7920_SendString(0, 0, "1. PLA");
 		ST7920_SendString(1, 0, "2. ABS <<");
 		ST7920_SendString(2, 0, "3. PETG");
 	}
 
-	if(FC_struct.parameters.filament_density == (float)Filament_density_ABS)
+	if(FC_struct.parameters.filament_density >= (Filament_density_PETG-0.001) && (FC_struct.parameters.filament_density <= Filament_density_PETG+0.001))
 	{
 		ST7920_SendString(0, 0, "1. PLA");
 		ST7920_SendString(1, 0, "2. ABS");
@@ -608,8 +613,10 @@ void active_start_screen()
 	ST7920_SendString(0, 0, "Working...");
 	ST7920_SendString(1, 0, "0/500 [cm]");
 	ST7920_SendString(3, 3, "STOP");
-
-
-
 }
 
+
+void quantity_screen()
+{
+	ST7920_SendString(0, 0, "QTY: ");
+}

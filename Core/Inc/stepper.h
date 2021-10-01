@@ -9,14 +9,15 @@
 #define INC_STEPPER_H_
 
 #include "L298_dc.h"
+#include "math.h"
 
 #define STEPEER_MOTOR_MAX_FREQ_HZ 		(MICRO_STEP * 1000)
 #define STEPPER_MOTOR_MIN_FREQ_HZ 		1
 #define STEPPER_MOTOR_MAX_SPEED 		100
 #define MICRO_STEP 						1
 #define STEP_PER_REVOLUTION 			200
-#define JAGGER_DIAMETER					11		// milimeters
-#define FULL_ROTATION_LENGTH			(2*3.14*JAGGER_DIAMETER/2) // milimeters
+#define JAGGER_RADIUS					0.0055		// meters
+#define FULL_ROTATION_LENGTH_CM			(2*3.14*JAGGER_RADIUS)*100 // centimeters
 
 
 
@@ -81,6 +82,6 @@ void stepper_set_dir(stepper_motor *motor, stepper_dir direction);
 void stepper_set_speed(stepper_motor *motor, uint32_t speed);
 void stepper_set_angle(stepper_motor *motor, uint32_t angle, uint32_t speed, stepper_dir dir);
 void stepper_centimeters_to_rotations(stepper_motor *motor, uint32_t centimeters, uint32_t speed, stepper_dir dir);
-void stepper_extrude_weight(stepper_motor *motor, uint16_t weight);
+void stepper_extrude_weight(stepper_motor *motor);
 
 #endif /* INC_STEPPER_H_ */
