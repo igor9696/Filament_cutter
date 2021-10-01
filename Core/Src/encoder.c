@@ -121,9 +121,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		else if(cursor_pos->FL_position == START)
 		{
 			FC_struct.mode = EXTRUDE;
-
+			cursor_pos->FL_position = ACTIVE_START;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
-			cursor_pos->FL_position = DEFAULT;
 		}
 
 		else if(cursor_pos->FL_position == STOP)
@@ -131,10 +130,17 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			stepper_stop(&extruder);
 			DC_stop(&DC_motor);
 
+			EXTRUDE_PROCESS_FLAG = 0;
+			CUTTING_PROCESS_FLAG = 0;
+
+			FC_struct.mode = STANDBY;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			cursor_pos->FL_position = DEFAULT;
 		}
+
+
 	}
+/////////////////////////////////////////////////////////////////////////
 
 	else if(cursor_pos->current_layer == SECOND_LAYER)
 	{
@@ -156,9 +162,99 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->TL_position = DENSITY_PLA;
 		}
 
+		else if(cursor_pos->SL_position == SAMPLE_WEIGHT)
+		{
+			cursor_pos->current_layer = THIRD_LAYER;
+			cursor_pos->TL_position = WEIGHT_5g;
+		}
+
+		else if(cursor_pos->SL_position == QUANTITY)
+		{
+			cursor_pos->current_layer = THIRD_LAYER;
+			cursor_pos->TL_position = QTY;
+		}
 
 	}
+/////////////////////////////////////////////////////////////////////////
+	else if(cursor_pos->current_layer == THIRD_LAYER)
+	{
+		if(cursor_pos->TL_position == DIAMETER_175)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DIA;
+			FC_struct.parameters.filament_diameter = Filament_diameter_175;
 
+		}
+
+		else if(cursor_pos->TL_position == DIAMETER_285)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DIA;
+			FC_struct.parameters.filament_diameter = Filament_diameter_285;
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_PLA)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DEN;
+			FC_struct.parameters.filament_density = Filament_density_PLA;
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_ABS)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->SL_position = FIL_DEN;
+			FC_struct.parameters.filament_density = Filament_density_ABS;
+
+		}
+
+		else if(cursor_pos->TL_position == DENSITY_PETG)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = FIL_DEN;
+			FC_struct.parameters.filament_density = Filament_density_PETG;
+
+		}
+
+		else if(cursor_pos->TL_position == WEIGHT_5g)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = SAMPLE_WEIGHT;
+			FC_struct.parameters.target_weight = Sample_weight_5g;
+		}
+
+		else if(cursor_pos->TL_position == WEIGHT_25g)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = SAMPLE_WEIGHT;
+			FC_struct.parameters.target_weight = Sample_weight_25g;
+
+		}
+
+		else if(cursor_pos->TL_position == WEIGHT_50g)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = SAMPLE_WEIGHT;
+			FC_struct.parameters.target_weight = Sample_weight_50g;
+
+		}
+
+		else if(cursor_pos->TL_position == WEIGHT_100g)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = SAMPLE_WEIGHT;
+			FC_struct.parameters.target_weight = Sample_weight_100g;
+		}
+
+
+		else if(cursor_pos->TL_position == QTY)
+		{
+			cursor_pos->current_layer = SECOND_LAYER;
+			cursor_pos->TL_position = QUANTITY;
+		}
+
+
+	}
 
 
 }

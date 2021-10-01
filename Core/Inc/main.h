@@ -82,6 +82,8 @@ void Error_Handler(void);
 #define CUT_DIR_IN2_GPIO_Port GPIOC
 #define CUT_DIR_IN1_Pin GPIO_PIN_12
 #define CUT_DIR_IN1_GPIO_Port GPIOC
+#define EXTRD_SLEEP_Pin GPIO_PIN_2
+#define EXTRD_SLEEP_GPIO_Port GPIOD
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
 #define DC_ENC_B_Pin GPIO_PIN_5

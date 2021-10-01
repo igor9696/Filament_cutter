@@ -44,7 +44,7 @@ stepper_dir DIR = CW;
 dc_motor DC_motor = { 0 };
 cursor_position cursor_pos;
 extern filament_cutter FC_struct;
-
+filament_cutter_mode prev_mode;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -75,7 +75,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int __io_putchar(int ch)
+{
+	ITM_SendChar(ch);
+	return ch;
+}
 /* USER CODE END 0 */
 
 /**
@@ -131,9 +135,9 @@ int main(void)
 
 	while (1)
 	{
+		motors_update(&extruder, &DC_motor);
 		ENC_Button_Action(&cursor_pos);
 		menu_update(&cursor_pos);
-		motors_update(&extruder, &DC_motor);
 
     /* USER CODE END WHILE */
 
@@ -194,10 +198,12 @@ void SystemClock_Config(void)
 void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
 {
 	/* Prevent unused argument(s) compilation warning */
-	UNUSED(hlptim);
-	DC_stop(&DC_motor);
+	//UNUSED(hlptim);
 	CUTTING_PROCESS_FLAG = 0;
 	FC_struct.mode = STANDBY;
+	cursor_pos.FL_position = DEFAULT;
+	printf("DC_INT\n");
+
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -206,9 +212,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	{
 		if (htim->Instance == extruder.slave_timer.htim->Instance)
 		{
-			stepper_stop(&extruder);
 			EXTRUDE_PROCESS_FLAG = 0;
 			FC_struct.mode = CUTTING;
+			printf("EXTR_INT\n");
 		}
 	}
 }

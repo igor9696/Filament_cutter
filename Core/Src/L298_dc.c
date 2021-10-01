@@ -7,6 +7,7 @@
 
 #include "L298_dc.h"
 
+
 void DC_motor_encoder_Init(dc_motor *motor) {
 	//__HAL_TIM_SET_AUTORELOAD(motor->encoder_timer, FULL_ROTATION_PULSE);
 	//HAL_TIM_Encoder_Start(motor->encoder_timer, TIM_CHANNEL_ALL);
@@ -71,13 +72,15 @@ uint16_t DC_get_encoder_counter(dc_motor *motor)
 	return __HAL_TIM_GET_COUNTER(motor->encoder_timer);
 }
 
+uint16_t pulses_to_count;
+
 void DC_set_angle(dc_motor *motor, uint16_t angle, uint8_t speed, DC_direction DIR)
 {
 	if(CUTTING_PROCESS_FLAG == 0)
 	{
 		CUTTING_PROCESS_FLAG = 1;
-		uint16_t pulses_to_count;
-		pulses_to_count = (angle * FULL_ROTATION_PULSE) / 360;
+		EXTRUDE_PROCESS_FLAG = 0;
+		pulses_to_count = (angle * FULL_ROTATION_PULSE * 2) / 360;
 		__HAL_LPTIM_AUTORELOAD_SET(motor->encoder_timer, pulses_to_count);
 		DC_rotate(motor, DIR, speed);
 	}

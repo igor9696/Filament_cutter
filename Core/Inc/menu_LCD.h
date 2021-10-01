@@ -21,6 +21,7 @@ typedef enum first_layer
 {
 	DEFAULT,
 	START,
+	ACTIVE_START,
 	STOP,
 	SETTINGS,
 
@@ -46,7 +47,10 @@ typedef enum third_layer
 	DENSITY_PLA,
 	DENSITY_ABS,
 	DENSITY_PETG,
-	WEIGHT,
+	WEIGHT_5g,
+	WEIGHT_25g,
+	WEIGHT_50g,
+	WEIGHT_100g,
 	QTY,
 
 }third_layer;
@@ -76,5 +80,9 @@ void menu_update(cursor_position* curr_position);
 void default_screen();
 void settings_screen();
 void diameter_screen();
+void density_screen();
+void weight_screen();
+void active_start_screen();
+void quantity_screen();
 
 #endif /* INC_MENU_LCD_H_ */
