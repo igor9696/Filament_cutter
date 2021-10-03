@@ -23,6 +23,9 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 	FC_params.sample_quantities = 1;
 	FC_params.target_weight = Sample_weight_5g;
 	FC_params.current_length_cm = 0;
+	FC_params.target_qty = 1;
+	FC_params.current_qty = 0;
+
 
 	FC_struct.motor = motor;
 	FC_struct.dc_motor = dc_motor;
@@ -34,11 +37,11 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 
 void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 {
-	if(FC_struct.mode != prev_mode)
-	{
-		prev_mode = FC_struct.mode;
-		printf("Mode: %d\n", prev_mode);
-	}
+//	if(FC_struct.mode != prev_mode)
+//	{
+//		prev_mode = FC_struct.mode;
+//		printf("Mode: %d\n", prev_mode);
+//	}
 
 	switch(FC_struct.mode)
 	{
@@ -53,8 +56,8 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 		break;
 
 	case CUTTING:
-		DC_set_angle(dc_motor, 360, 50, RIGHT);
 		stepper_stop(&extruder);
+		DC_set_angle(dc_motor, 360, 50, RIGHT);
 
 		break;
 	}

@@ -197,12 +197,22 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
 {
-	/* Prevent unused argument(s) compilation warning */
-	//UNUSED(hlptim);
-	CUTTING_PROCESS_FLAG = 0;
-	FC_struct.mode = STANDBY;
-	cursor_pos.FL_position = DEFAULT;
-	printf("DC_INT\n");
+	if(FC_struct.parameters.current_qty != FC_struct.parameters.target_qty)
+	{
+		CUTTING_PROCESS_FLAG = 0;
+		FC_struct.mode = EXTRUDE;
+		FC_struct.parameters.current_qty++;
+	}
+
+	else
+	{
+		CUTTING_PROCESS_FLAG = 0;
+		cursor_pos.FL_position = DEFAULT;
+		FC_struct.mode = STANDBY;
+		FC_struct.parameters.current_qty = 0;
+	}
+
+	//printf("DC_INT\n");
 
 }
 
@@ -214,7 +224,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			EXTRUDE_PROCESS_FLAG = 0;
 			FC_struct.mode = CUTTING;
-			printf("EXTR_INT\n");
+			//printf("EXTR_INT\n");
 		}
 	}
 }

@@ -307,7 +307,7 @@ void update_third_layer(cursor_position* curr_position)
 			ST7920_GraphicMode(0);
 			ST7920_Clear();
 
-			quantity_screen();
+			quantity_screen(FC_struct.parameters.target_qty);
 
 			break;
 
@@ -345,6 +345,13 @@ void menu_update(cursor_position* curr_position)
 	else if(curr_position->current_layer == THIRD_LAYER)
 	{
 		update_third_layer(curr_position);
+
+
+		// print temporary quantity value on screen
+		if(curr_position->TL_position == QTY)
+		{
+			quantity_screen_update();
+		}
 	}
 
 }
@@ -493,7 +500,7 @@ void update_enc(cursor_position* curr_position)
 
 		else if(curr_position->SL_position == QUANTITY)
 		{
-				// do smth
+			FC_struct.parameters.temp_qty = enc_value % 10;
 		}
 
 
@@ -613,10 +620,27 @@ void active_start_screen()
 	ST7920_SendString(0, 0, "Working...");
 	ST7920_SendString(1, 0, "0/500 [cm]");
 	ST7920_SendString(3, 3, "STOP");
+
 }
 
 
 void quantity_screen()
 {
 	ST7920_SendString(0, 0, "QTY: ");
+
+}
+
+void quantity_screen_update()
+{
+	static uint8_t qty_prev_value;
+	char qty_value[4];
+
+	if(qty_prev_value != FC_struct.parameters.temp_qty)
+	{
+		qty_prev_value = FC_struct.parameters.temp_qty;
+		sprintf(qty_value, "%d", FC_struct.parameters.temp_qty);
+		ST7920_SendString(0, 1, qty_value);
+
+	}
+
 }

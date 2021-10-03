@@ -249,6 +249,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 		else if(cursor_pos->TL_position == QTY)
 		{
+			FC_struct.parameters.target_qty = FC_struct.parameters.temp_qty;
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = QUANTITY;
 		}
