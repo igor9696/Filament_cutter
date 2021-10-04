@@ -55,10 +55,6 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 			FC_struct.mode = EXTRUDE;
 			FC_struct.parameters.current_qty++;
 		}
-		else
-		{
-//			cursor_pos.FL_position = DEFAULT;
-		}
 
 		break;
 
