@@ -380,7 +380,7 @@ void update_enc(cursor_position* curr_position)
 	if(curr_position->current_layer == FIRST_LAYER)
 	{
 
-		if(!(FC_struct.mode != STANDBY))
+		if(FC_struct.parameters.current_qty == FC_struct.parameters.target_qty)
 		{
 
 			if((enc_value >=0) & (enc_value < 4))
@@ -399,7 +399,7 @@ void update_enc(cursor_position* curr_position)
 			}
 		}
 
-		else if((enc_value >= 8) & (enc_value < 20))
+		else if((enc_value >= 4) & (enc_value < 20))
 		{
 			curr_position->FL_position = STOP;
 		}
