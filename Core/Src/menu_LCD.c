@@ -639,7 +639,7 @@ void quantity_screen_update()
 	{
 		qty_prev_value = FC_struct.parameters.temp_qty;
 		sprintf(qty_value, "%d", FC_struct.parameters.temp_qty);
-		ST7920_SendString(0, 1, qty_value);
+		ST7920_SendString(0, 2, qty_value);
 
 	}
 

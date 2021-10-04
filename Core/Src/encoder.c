@@ -17,6 +17,7 @@ static encoder_button enc_btn;
 extern stepper_motor extruder;
 extern dc_motor DC_motor;
 extern filament_cutter FC_struct;
+extern cursor_position cursor_pos;
 
 void encoder_init(GPIO_TypeDef* GPIO_BTN_PORT, uint16_t Button_Pin, uint32_t debounce_time)
 {
@@ -123,6 +124,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			FC_struct.mode = EXTRUDE;
 			cursor_pos->FL_position = ACTIVE_START;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
+			FC_struct.parameters.current_qty = 0;
 		}
 
 		else if(cursor_pos->FL_position == STOP)
@@ -249,7 +251,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 		else if(cursor_pos->TL_position == QTY)
 		{
-			FC_struct.parameters.target_qty = FC_struct.parameters.temp_qty;
+			FC_struct.parameters.target_qty = FC_struct.parameters.temp_qty - 1;
+			FC_struct.parameters.current_qty = FC_struct.parameters.temp_qty - 1;
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = QUANTITY;
 		}

@@ -9,12 +9,14 @@
 #include "stdio.h"
 #include "L298_dc.h"
 #include "stepper.h"
+#include "menu_LCD.h"
 
 volatile filament_cutter FC_struct;
 FC_parameters FC_params;
 extern filament_cutter_mode prev_mode;
 extern stepper_motor extruder;
 extern dc_motor DC_motor;
+extern cursor_position cursor_pos;
 
 void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 {
@@ -23,7 +25,7 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 	FC_params.sample_quantities = 1;
 	FC_params.target_weight = Sample_weight_5g;
 	FC_params.current_length_cm = 0;
-	FC_params.target_qty = 1;
+	FC_params.target_qty = 0;
 	FC_params.current_qty = 0;
 
 
@@ -47,6 +49,16 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 	{
 	case STANDBY:
 		DC_stop(&DC_motor);
+
+		if(FC_struct.parameters.current_qty != FC_struct.parameters.target_qty)
+		{
+			FC_struct.mode = EXTRUDE;
+			FC_struct.parameters.current_qty++;
+		}
+		else
+		{
+//			cursor_pos.FL_position = DEFAULT;
+		}
 
 		break;
 

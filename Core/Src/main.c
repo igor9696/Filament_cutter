@@ -197,21 +197,16 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
 {
-	if(FC_struct.parameters.current_qty != FC_struct.parameters.target_qty)
+
+	FC_struct.mode = STANDBY;
+	//FC_struct.parameters.current_qty = 0;
+	if(FC_struct.parameters.current_qty == (FC_struct.parameters.target_qty - 1))
 	{
-		CUTTING_PROCESS_FLAG = 0;
-		FC_struct.mode = EXTRUDE;
-		FC_struct.parameters.current_qty++;
+		//cursor_pos.FL_position = DEFAULT;
+
 	}
 
-	else
-	{
-		CUTTING_PROCESS_FLAG = 0;
-		cursor_pos.FL_position = DEFAULT;
-		FC_struct.mode = STANDBY;
-		FC_struct.parameters.current_qty = 0;
-	}
-
+	CUTTING_PROCESS_FLAG = 0;
 	//printf("DC_INT\n");
 
 }
