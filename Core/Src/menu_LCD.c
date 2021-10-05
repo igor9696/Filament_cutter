@@ -366,7 +366,7 @@ void update_enc(cursor_position* curr_position)
 			}
 		}
 
-		if (enc_value == 4)
+		else if (enc_value == 4)
 		{
 			curr_position->FL_position = STOP;
 		}

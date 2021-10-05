@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00025462  00000000  00000000  00043e98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00016b54  00000000  00000000  000692fa  2**0
+ 17 .debug_line   00016b6f  00000000  00000000  000692fa  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000dd794  00000000  00000000  0007fe4e  2**0
+ 18 .debug_str    000dd794  00000000  00000000  0007fe69  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  0015d5e2  2**0
+ 19 .comment      00000053  00000000  00000000  0015d5fd  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00005388  00000000  00000000  0015d638  2**2
+ 20 .debug_frame  00005388  00000000  00000000  0015d650  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3246,9 +3246,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001b56:	d10b      	bne.n	8001b70 <ENC_Button_PressedTask+0x30>
 		{
 			clear_screen();
- 8001b58:	f000 ff14 	bl	8002984 <clear_screen>
+ 8001b58:	f000 ff16 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001b5c:	f000 ff4a 	bl	80029f4 <settings_screen>
+ 8001b5c:	f000 ff4c 	bl	80029f8 <settings_screen>
 			cursor_pos->current_layer = SECOND_LAYER;
  8001b60:	687b      	ldr	r3, [r7, #4]
  8001b62:	2201      	movs	r2, #1
@@ -3401,7 +3401,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001c3c:	2205      	movs	r2, #5
  8001c3e:	711a      	strb	r2, [r3, #4]
 			clear_screen();
- 8001c40:	f000 fea0 	bl	8002984 <clear_screen>
+ 8001c40:	f000 fea2 	bl	8002988 <clear_screen>
 			weight_screen();
  8001c44:	f000 ffea 	bl	8002c1c <weight_screen>
 }
@@ -3420,7 +3420,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001c5c:	2206      	movs	r2, #6
  8001c5e:	711a      	strb	r2, [r3, #4]
 			clear_screen();
- 8001c60:	f000 fe90 	bl	8002984 <clear_screen>
+ 8001c60:	f000 fe92 	bl	8002988 <clear_screen>
 			quantity_screen();
  8001c64:	f001 f82c 	bl	8002cc0 <quantity_screen>
 }
@@ -3448,9 +3448,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001c8a:	4a46      	ldr	r2, [pc, #280]	; (8001da4 <ENC_Button_PressedTask+0x264>)
  8001c8c:	609a      	str	r2, [r3, #8]
 			clear_screen();
- 8001c8e:	f000 fe79 	bl	8002984 <clear_screen>
+ 8001c8e:	f000 fe7b 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001c92:	f000 feaf 	bl	80029f4 <settings_screen>
+ 8001c92:	f000 feb1 	bl	80029f8 <settings_screen>
 }
  8001c96:	e074      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == DIAMETER_285)
@@ -3471,9 +3471,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001cae:	4a3e      	ldr	r2, [pc, #248]	; (8001da8 <ENC_Button_PressedTask+0x268>)
  8001cb0:	609a      	str	r2, [r3, #8]
 			clear_screen();
- 8001cb2:	f000 fe67 	bl	8002984 <clear_screen>
+ 8001cb2:	f000 fe69 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001cb6:	f000 fe9d 	bl	80029f4 <settings_screen>
+ 8001cb6:	f000 fe9f 	bl	80029f8 <settings_screen>
 }
  8001cba:	e062      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == DENSITY_PLA)
@@ -3494,9 +3494,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001cd2:	4a36      	ldr	r2, [pc, #216]	; (8001dac <ENC_Button_PressedTask+0x26c>)
  8001cd4:	605a      	str	r2, [r3, #4]
 			clear_screen();
- 8001cd6:	f000 fe55 	bl	8002984 <clear_screen>
+ 8001cd6:	f000 fe57 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001cda:	f000 fe8b 	bl	80029f4 <settings_screen>
+ 8001cda:	f000 fe8d 	bl	80029f8 <settings_screen>
 }
  8001cde:	e050      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == DENSITY_ABS)
@@ -3517,9 +3517,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001cf6:	4a2e      	ldr	r2, [pc, #184]	; (8001db0 <ENC_Button_PressedTask+0x270>)
  8001cf8:	605a      	str	r2, [r3, #4]
 			clear_screen();
- 8001cfa:	f000 fe43 	bl	8002984 <clear_screen>
+ 8001cfa:	f000 fe45 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001cfe:	f000 fe79 	bl	80029f4 <settings_screen>
+ 8001cfe:	f000 fe7b 	bl	80029f8 <settings_screen>
 }
  8001d02:	e03e      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == DENSITY_PETG)
@@ -3540,9 +3540,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001d1a:	4a26      	ldr	r2, [pc, #152]	; (8001db4 <ENC_Button_PressedTask+0x274>)
  8001d1c:	605a      	str	r2, [r3, #4]
 			clear_screen();
- 8001d1e:	f000 fe31 	bl	8002984 <clear_screen>
+ 8001d1e:	f000 fe33 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001d22:	f000 fe67 	bl	80029f4 <settings_screen>
+ 8001d22:	f000 fe69 	bl	80029f8 <settings_screen>
 }
  8001d26:	e02c      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == WEIGHT)
@@ -3564,9 +3564,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001d40:	4b13      	ldr	r3, [pc, #76]	; (8001d90 <ENC_Button_PressedTask+0x250>)
  8001d42:	819a      	strh	r2, [r3, #12]
 			clear_screen();
- 8001d44:	f000 fe1e 	bl	8002984 <clear_screen>
+ 8001d44:	f000 fe20 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001d48:	f000 fe54 	bl	80029f4 <settings_screen>
+ 8001d48:	f000 fe56 	bl	80029f8 <settings_screen>
 }
  8001d4c:	e019      	b.n	8001d82 <ENC_Button_PressedTask+0x242>
 		else if(cursor_pos->TL_position == QTY)
@@ -3597,9 +3597,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
  8001d76:	2204      	movs	r2, #4
  8001d78:	711a      	strb	r2, [r3, #4]
 			clear_screen();
- 8001d7a:	f000 fe03 	bl	8002984 <clear_screen>
+ 8001d7a:	f000 fe05 	bl	8002988 <clear_screen>
 			settings_screen();
- 8001d7e:	f000 fe39 	bl	80029f4 <settings_screen>
+ 8001d7e:	f000 fe3b 	bl	80029f8 <settings_screen>
 }
  8001d82:	bf00      	nop
  8001d84:	3708      	adds	r7, #8
@@ -4460,7 +4460,6 @@ void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
  80022d0:	7d1b      	ldrb	r3, [r3, #20]
 	{
 		//cursor_pos.FL_position = DEFAULT;
-
 	}
 
 	CUTTING_PROCESS_FLAG = 0;
@@ -4598,13 +4597,13 @@ void update_first_layer(cursor_position* curr_position)
  800238e:	f7ff f89b 	bl	80014c8 <ST7920_Clear>
 
 			default_screen();
- 8002392:	f000 fb05 	bl	80029a0 <default_screen>
+ 8002392:	f000 fb07 	bl	80029a4 <default_screen>
 			break;
  8002396:	e040      	b.n	800241a <update_first_layer+0xda>
 
 			case START:
 			default_screen();
- 8002398:	f000 fb02 	bl	80029a0 <default_screen>
+ 8002398:	f000 fb04 	bl	80029a4 <default_screen>
 
 			// highlighting "START"
 			ST7920_GraphicMode(1);
@@ -4667,7 +4666,7 @@ void update_first_layer(cursor_position* curr_position)
 
 			case SETTINGS:
 			default_screen();
- 80023f6:	f000 fad3 	bl	80029a0 <default_screen>
+ 80023f6:	f000 fad5 	bl	80029a4 <default_screen>
 			// highlighting "SETTINGS"
 			ST7920_GraphicMode(1);
  80023fa:	2001      	movs	r0, #1
@@ -4753,7 +4752,7 @@ void update_second_layer(cursor_position* curr_position)
 
 
 			settings_screen();
- 8002480:	f000 fab8 	bl	80029f4 <settings_screen>
+ 8002480:	f000 faba 	bl	80029f8 <settings_screen>
 
 			// highlighting
 			ST7920_GraphicMode(1);
@@ -4788,7 +4787,7 @@ void update_second_layer(cursor_position* curr_position)
 
 			// highlighting
 			settings_screen();
- 80024b6:	f000 fa9d 	bl	80029f4 <settings_screen>
+ 80024b6:	f000 fa9f 	bl	80029f8 <settings_screen>
 			ST7920_GraphicMode(1);
  80024ba:	2001      	movs	r0, #1
  80024bc:	f7fe ff50 	bl	8001360 <ST7920_GraphicMode>
@@ -4821,7 +4820,7 @@ void update_second_layer(cursor_position* curr_position)
 
 
 			settings_screen();
- 80024ec:	f000 fa82 	bl	80029f4 <settings_screen>
+ 80024ec:	f000 fa84 	bl	80029f8 <settings_screen>
 
 			ST7920_GraphicMode(1);
  80024f0:	2001      	movs	r0, #1
@@ -4854,7 +4853,7 @@ void update_second_layer(cursor_position* curr_position)
 
 
 			settings_screen();
- 8002522:	f000 fa67 	bl	80029f4 <settings_screen>
+ 8002522:	f000 fa69 	bl	80029f8 <settings_screen>
 
 			ST7920_GraphicMode(1);
  8002526:	2001      	movs	r0, #1
@@ -4887,7 +4886,7 @@ void update_second_layer(cursor_position* curr_position)
 
 
 			settings_screen();
- 8002558:	f000 fa4c 	bl	80029f4 <settings_screen>
+ 8002558:	f000 fa4e 	bl	80029f8 <settings_screen>
 
 			ST7920_GraphicMode(1);
  800255c:	2001      	movs	r0, #1
@@ -5317,7 +5316,7 @@ void update_enc(cursor_position* curr_position)
  80027e6:	687b      	ldr	r3, [r7, #4]
  80027e8:	799b      	ldrb	r3, [r3, #6]
  80027ea:	2b00      	cmp	r3, #0
- 80027ec:	d12f      	bne.n	800284e <update_enc+0x7e>
+ 80027ec:	d131      	bne.n	8002852 <update_enc+0x82>
 	{
 		if(enc_get_counter() > 20)
  80027ee:	f7ff f915 	bl	8001a1c <enc_get_counter>
@@ -5326,7 +5325,7 @@ void update_enc(cursor_position* curr_position)
  80027f6:	d90a      	bls.n	800280e <update_enc+0x3e>
 		{
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
- 80027f8:	4b60      	ldr	r3, [pc, #384]	; (800297c <update_enc+0x1ac>)
+ 80027f8:	4b61      	ldr	r3, [pc, #388]	; (8002980 <update_enc+0x1b0>)
  80027fa:	681b      	ldr	r3, [r3, #0]
  80027fc:	2200      	movs	r2, #0
  80027fe:	625a      	str	r2, [r3, #36]	; 0x24
@@ -5341,10 +5340,10 @@ void update_enc(cursor_position* curr_position)
 		}
 
 		if(!FC_struct.parameters.ACTIVE_START_FLAG)
- 800280e:	4b5c      	ldr	r3, [pc, #368]	; (8002980 <update_enc+0x1b0>)
+ 800280e:	4b5d      	ldr	r3, [pc, #372]	; (8002984 <update_enc+0x1b4>)
  8002810:	7e1b      	ldrb	r3, [r3, #24]
  8002812:	2b00      	cmp	r3, #0
- 8002814:	d113      	bne.n	800283e <update_enc+0x6e>
+ 8002814:	d115      	bne.n	8002842 <update_enc+0x72>
 		{
 			if(enc_value == 0)
  8002816:	89fb      	ldrh	r3, [r7, #14]
@@ -5355,355 +5354,348 @@ void update_enc(cursor_position* curr_position)
  800281c:	687b      	ldr	r3, [r7, #4]
  800281e:	2200      	movs	r2, #0
  8002820:	701a      	strb	r2, [r3, #0]
- 8002822:	e00c      	b.n	800283e <update_enc+0x6e>
-			}
-
-			else if(enc_value == 1)
- 8002824:	89fb      	ldrh	r3, [r7, #14]
- 8002826:	2b01      	cmp	r3, #1
- 8002828:	d103      	bne.n	8002832 <update_enc+0x62>
-			{
-				curr_position->FL_position = SETTINGS;
- 800282a:	687b      	ldr	r3, [r7, #4]
- 800282c:	2204      	movs	r2, #4
- 800282e:	701a      	strb	r2, [r3, #0]
- 8002830:	e005      	b.n	800283e <update_enc+0x6e>
-			}
-
-			else if(enc_value == 2)
- 8002832:	89fb      	ldrh	r3, [r7, #14]
- 8002834:	2b02      	cmp	r3, #2
- 8002836:	d102      	bne.n	800283e <update_enc+0x6e>
-			{
-				curr_position->FL_position = START;
- 8002838:	687b      	ldr	r3, [r7, #4]
- 800283a:	2201      	movs	r2, #1
- 800283c:	701a      	strb	r2, [r3, #0]
-			}
-		}
-
-		if (enc_value == 4)
- 800283e:	89fb      	ldrh	r3, [r7, #14]
- 8002840:	2b04      	cmp	r3, #4
- 8002842:	f040 8097 	bne.w	8002974 <update_enc+0x1a4>
-		{
-			curr_position->FL_position = STOP;
- 8002846:	687b      	ldr	r3, [r7, #4]
- 8002848:	2203      	movs	r2, #3
- 800284a:	701a      	strb	r2, [r3, #0]
 
 
 	}
 
 
 }
- 800284c:	e092      	b.n	8002974 <update_enc+0x1a4>
+ 8002822:	e0a9      	b.n	8002978 <update_enc+0x1a8>
+			else if(enc_value == 1)
+ 8002824:	89fb      	ldrh	r3, [r7, #14]
+ 8002826:	2b01      	cmp	r3, #1
+ 8002828:	d103      	bne.n	8002832 <update_enc+0x62>
+				curr_position->FL_position = SETTINGS;
+ 800282a:	687b      	ldr	r3, [r7, #4]
+ 800282c:	2204      	movs	r2, #4
+ 800282e:	701a      	strb	r2, [r3, #0]
+}
+ 8002830:	e0a2      	b.n	8002978 <update_enc+0x1a8>
+			else if(enc_value == 2)
+ 8002832:	89fb      	ldrh	r3, [r7, #14]
+ 8002834:	2b02      	cmp	r3, #2
+ 8002836:	f040 809f 	bne.w	8002978 <update_enc+0x1a8>
+				curr_position->FL_position = START;
+ 800283a:	687b      	ldr	r3, [r7, #4]
+ 800283c:	2201      	movs	r2, #1
+ 800283e:	701a      	strb	r2, [r3, #0]
+}
+ 8002840:	e09a      	b.n	8002978 <update_enc+0x1a8>
+		else if (enc_value == 4)
+ 8002842:	89fb      	ldrh	r3, [r7, #14]
+ 8002844:	2b04      	cmp	r3, #4
+ 8002846:	f040 8097 	bne.w	8002978 <update_enc+0x1a8>
+			curr_position->FL_position = STOP;
+ 800284a:	687b      	ldr	r3, [r7, #4]
+ 800284c:	2203      	movs	r2, #3
+ 800284e:	701a      	strb	r2, [r3, #0]
+}
+ 8002850:	e092      	b.n	8002978 <update_enc+0x1a8>
 	else if(curr_position->current_layer == SECOND_LAYER)
- 800284e:	687b      	ldr	r3, [r7, #4]
- 8002850:	799b      	ldrb	r3, [r3, #6]
- 8002852:	2b01      	cmp	r3, #1
- 8002854:	d12e      	bne.n	80028b4 <update_enc+0xe4>
+ 8002852:	687b      	ldr	r3, [r7, #4]
+ 8002854:	799b      	ldrb	r3, [r3, #6]
+ 8002856:	2b01      	cmp	r3, #1
+ 8002858:	d12e      	bne.n	80028b8 <update_enc+0xe8>
 		if(enc_get_counter() > 20)
- 8002856:	f7ff f8e1 	bl	8001a1c <enc_get_counter>
- 800285a:	4603      	mov	r3, r0
- 800285c:	2b14      	cmp	r3, #20
- 800285e:	d90a      	bls.n	8002876 <update_enc+0xa6>
+ 800285a:	f7ff f8df 	bl	8001a1c <enc_get_counter>
+ 800285e:	4603      	mov	r3, r0
+ 8002860:	2b14      	cmp	r3, #20
+ 8002862:	d90a      	bls.n	800287a <update_enc+0xaa>
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
- 8002860:	4b46      	ldr	r3, [pc, #280]	; (800297c <update_enc+0x1ac>)
- 8002862:	681b      	ldr	r3, [r3, #0]
- 8002864:	2200      	movs	r2, #0
- 8002866:	625a      	str	r2, [r3, #36]	; 0x24
+ 8002864:	4b46      	ldr	r3, [pc, #280]	; (8002980 <update_enc+0x1b0>)
+ 8002866:	681b      	ldr	r3, [r3, #0]
+ 8002868:	2200      	movs	r2, #0
+ 800286a:	625a      	str	r2, [r3, #36]	; 0x24
 			enc_value = enc_get_counter();
- 8002868:	f7ff f8d8 	bl	8001a1c <enc_get_counter>
- 800286c:	4603      	mov	r3, r0
- 800286e:	81fb      	strh	r3, [r7, #14]
+ 800286c:	f7ff f8d6 	bl	8001a1c <enc_get_counter>
+ 8002870:	4603      	mov	r3, r0
+ 8002872:	81fb      	strh	r3, [r7, #14]
 			enc_value /= 4;
- 8002870:	89fb      	ldrh	r3, [r7, #14]
- 8002872:	089b      	lsrs	r3, r3, #2
- 8002874:	81fb      	strh	r3, [r7, #14]
+ 8002874:	89fb      	ldrh	r3, [r7, #14]
+ 8002876:	089b      	lsrs	r3, r3, #2
+ 8002878:	81fb      	strh	r3, [r7, #14]
 		if(enc_value == 1)
- 8002876:	89fb      	ldrh	r3, [r7, #14]
- 8002878:	2b01      	cmp	r3, #1
- 800287a:	d102      	bne.n	8002882 <update_enc+0xb2>
+ 800287a:	89fb      	ldrh	r3, [r7, #14]
+ 800287c:	2b01      	cmp	r3, #1
+ 800287e:	d102      	bne.n	8002886 <update_enc+0xb6>
 			curr_position->SL_position = FIL_DIA;
- 800287c:	687b      	ldr	r3, [r7, #4]
- 800287e:	2201      	movs	r2, #1
- 8002880:	709a      	strb	r2, [r3, #2]
+ 8002880:	687b      	ldr	r3, [r7, #4]
+ 8002882:	2201      	movs	r2, #1
+ 8002884:	709a      	strb	r2, [r3, #2]
 		if(enc_value == 2)
- 8002882:	89fb      	ldrh	r3, [r7, #14]
- 8002884:	2b02      	cmp	r3, #2
- 8002886:	d102      	bne.n	800288e <update_enc+0xbe>
+ 8002886:	89fb      	ldrh	r3, [r7, #14]
+ 8002888:	2b02      	cmp	r3, #2
+ 800288a:	d102      	bne.n	8002892 <update_enc+0xc2>
 			curr_position->SL_position = FIL_DEN;
- 8002888:	687b      	ldr	r3, [r7, #4]
- 800288a:	2202      	movs	r2, #2
- 800288c:	709a      	strb	r2, [r3, #2]
+ 800288c:	687b      	ldr	r3, [r7, #4]
+ 800288e:	2202      	movs	r2, #2
+ 8002890:	709a      	strb	r2, [r3, #2]
 		if(enc_value == 3)
- 800288e:	89fb      	ldrh	r3, [r7, #14]
- 8002890:	2b03      	cmp	r3, #3
- 8002892:	d102      	bne.n	800289a <update_enc+0xca>
+ 8002892:	89fb      	ldrh	r3, [r7, #14]
+ 8002894:	2b03      	cmp	r3, #3
+ 8002896:	d102      	bne.n	800289e <update_enc+0xce>
 			curr_position->SL_position = SAMPLE_WEIGHT;
- 8002894:	687b      	ldr	r3, [r7, #4]
- 8002896:	2203      	movs	r2, #3
- 8002898:	709a      	strb	r2, [r3, #2]
+ 8002898:	687b      	ldr	r3, [r7, #4]
+ 800289a:	2203      	movs	r2, #3
+ 800289c:	709a      	strb	r2, [r3, #2]
 		if(enc_value == 4)
- 800289a:	89fb      	ldrh	r3, [r7, #14]
- 800289c:	2b04      	cmp	r3, #4
- 800289e:	d102      	bne.n	80028a6 <update_enc+0xd6>
+ 800289e:	89fb      	ldrh	r3, [r7, #14]
+ 80028a0:	2b04      	cmp	r3, #4
+ 80028a2:	d102      	bne.n	80028aa <update_enc+0xda>
 			curr_position->SL_position = QUANTITY;
- 80028a0:	687b      	ldr	r3, [r7, #4]
- 80028a2:	2204      	movs	r2, #4
- 80028a4:	709a      	strb	r2, [r3, #2]
+ 80028a4:	687b      	ldr	r3, [r7, #4]
+ 80028a6:	2204      	movs	r2, #4
+ 80028a8:	709a      	strb	r2, [r3, #2]
 		if(enc_value == 0)
- 80028a6:	89fb      	ldrh	r3, [r7, #14]
- 80028a8:	2b00      	cmp	r3, #0
- 80028aa:	d163      	bne.n	8002974 <update_enc+0x1a4>
+ 80028aa:	89fb      	ldrh	r3, [r7, #14]
+ 80028ac:	2b00      	cmp	r3, #0
+ 80028ae:	d163      	bne.n	8002978 <update_enc+0x1a8>
 			curr_position->SL_position = BACK;
- 80028ac:	687b      	ldr	r3, [r7, #4]
- 80028ae:	2200      	movs	r2, #0
- 80028b0:	709a      	strb	r2, [r3, #2]
+ 80028b0:	687b      	ldr	r3, [r7, #4]
+ 80028b2:	2200      	movs	r2, #0
+ 80028b4:	709a      	strb	r2, [r3, #2]
 }
- 80028b2:	e05f      	b.n	8002974 <update_enc+0x1a4>
+ 80028b6:	e05f      	b.n	8002978 <update_enc+0x1a8>
 	else if(curr_position->current_layer == THIRD_LAYER)
- 80028b4:	687b      	ldr	r3, [r7, #4]
- 80028b6:	799b      	ldrb	r3, [r3, #6]
- 80028b8:	2b02      	cmp	r3, #2
- 80028ba:	d15b      	bne.n	8002974 <update_enc+0x1a4>
+ 80028b8:	687b      	ldr	r3, [r7, #4]
+ 80028ba:	799b      	ldrb	r3, [r3, #6]
+ 80028bc:	2b02      	cmp	r3, #2
+ 80028be:	d15b      	bne.n	8002978 <update_enc+0x1a8>
 		if(curr_position->SL_position == FIL_DIA)
- 80028bc:	687b      	ldr	r3, [r7, #4]
- 80028be:	789b      	ldrb	r3, [r3, #2]
- 80028c0:	2b01      	cmp	r3, #1
- 80028c2:	d11c      	bne.n	80028fe <update_enc+0x12e>
+ 80028c0:	687b      	ldr	r3, [r7, #4]
+ 80028c2:	789b      	ldrb	r3, [r3, #2]
+ 80028c4:	2b01      	cmp	r3, #1
+ 80028c6:	d11c      	bne.n	8002902 <update_enc+0x132>
 			if(enc_get_counter() > 20)
- 80028c4:	f7ff f8aa 	bl	8001a1c <enc_get_counter>
- 80028c8:	4603      	mov	r3, r0
- 80028ca:	2b14      	cmp	r3, #20
- 80028cc:	d90a      	bls.n	80028e4 <update_enc+0x114>
+ 80028c8:	f7ff f8a8 	bl	8001a1c <enc_get_counter>
+ 80028cc:	4603      	mov	r3, r0
+ 80028ce:	2b14      	cmp	r3, #20
+ 80028d0:	d90a      	bls.n	80028e8 <update_enc+0x118>
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
- 80028ce:	4b2b      	ldr	r3, [pc, #172]	; (800297c <update_enc+0x1ac>)
- 80028d0:	681b      	ldr	r3, [r3, #0]
- 80028d2:	2200      	movs	r2, #0
- 80028d4:	625a      	str	r2, [r3, #36]	; 0x24
+ 80028d2:	4b2b      	ldr	r3, [pc, #172]	; (8002980 <update_enc+0x1b0>)
+ 80028d4:	681b      	ldr	r3, [r3, #0]
+ 80028d6:	2200      	movs	r2, #0
+ 80028d8:	625a      	str	r2, [r3, #36]	; 0x24
 				enc_value = enc_get_counter();
- 80028d6:	f7ff f8a1 	bl	8001a1c <enc_get_counter>
- 80028da:	4603      	mov	r3, r0
- 80028dc:	81fb      	strh	r3, [r7, #14]
+ 80028da:	f7ff f89f 	bl	8001a1c <enc_get_counter>
+ 80028de:	4603      	mov	r3, r0
+ 80028e0:	81fb      	strh	r3, [r7, #14]
 				enc_value /= 4;
- 80028de:	89fb      	ldrh	r3, [r7, #14]
- 80028e0:	089b      	lsrs	r3, r3, #2
- 80028e2:	81fb      	strh	r3, [r7, #14]
+ 80028e2:	89fb      	ldrh	r3, [r7, #14]
+ 80028e4:	089b      	lsrs	r3, r3, #2
+ 80028e6:	81fb      	strh	r3, [r7, #14]
 			if(enc_value == 0)
- 80028e4:	89fb      	ldrh	r3, [r7, #14]
- 80028e6:	2b00      	cmp	r3, #0
- 80028e8:	d102      	bne.n	80028f0 <update_enc+0x120>
+ 80028e8:	89fb      	ldrh	r3, [r7, #14]
+ 80028ea:	2b00      	cmp	r3, #0
+ 80028ec:	d102      	bne.n	80028f4 <update_enc+0x124>
 				curr_position->TL_position = DIAMETER_175;
- 80028ea:	687b      	ldr	r3, [r7, #4]
- 80028ec:	2200      	movs	r2, #0
- 80028ee:	711a      	strb	r2, [r3, #4]
+ 80028ee:	687b      	ldr	r3, [r7, #4]
+ 80028f0:	2200      	movs	r2, #0
+ 80028f2:	711a      	strb	r2, [r3, #4]
 			if(enc_value == 1)
- 80028f0:	89fb      	ldrh	r3, [r7, #14]
- 80028f2:	2b01      	cmp	r3, #1
- 80028f4:	d13e      	bne.n	8002974 <update_enc+0x1a4>
+ 80028f4:	89fb      	ldrh	r3, [r7, #14]
+ 80028f6:	2b01      	cmp	r3, #1
+ 80028f8:	d13e      	bne.n	8002978 <update_enc+0x1a8>
 				curr_position->TL_position = DIAMETER_285;
- 80028f6:	687b      	ldr	r3, [r7, #4]
- 80028f8:	2201      	movs	r2, #1
- 80028fa:	711a      	strb	r2, [r3, #4]
+ 80028fa:	687b      	ldr	r3, [r7, #4]
+ 80028fc:	2201      	movs	r2, #1
+ 80028fe:	711a      	strb	r2, [r3, #4]
 }
- 80028fc:	e03a      	b.n	8002974 <update_enc+0x1a4>
+ 8002900:	e03a      	b.n	8002978 <update_enc+0x1a8>
 		else if(curr_position->SL_position == FIL_DEN)
- 80028fe:	687b      	ldr	r3, [r7, #4]
- 8002900:	789b      	ldrb	r3, [r3, #2]
- 8002902:	2b02      	cmp	r3, #2
- 8002904:	d122      	bne.n	800294c <update_enc+0x17c>
+ 8002902:	687b      	ldr	r3, [r7, #4]
+ 8002904:	789b      	ldrb	r3, [r3, #2]
+ 8002906:	2b02      	cmp	r3, #2
+ 8002908:	d122      	bne.n	8002950 <update_enc+0x180>
 			if(enc_get_counter() > 20)
- 8002906:	f7ff f889 	bl	8001a1c <enc_get_counter>
- 800290a:	4603      	mov	r3, r0
- 800290c:	2b14      	cmp	r3, #20
- 800290e:	d90a      	bls.n	8002926 <update_enc+0x156>
+ 800290a:	f7ff f887 	bl	8001a1c <enc_get_counter>
+ 800290e:	4603      	mov	r3, r0
+ 8002910:	2b14      	cmp	r3, #20
+ 8002912:	d90a      	bls.n	800292a <update_enc+0x15a>
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
- 8002910:	4b1a      	ldr	r3, [pc, #104]	; (800297c <update_enc+0x1ac>)
- 8002912:	681b      	ldr	r3, [r3, #0]
- 8002914:	2200      	movs	r2, #0
- 8002916:	625a      	str	r2, [r3, #36]	; 0x24
+ 8002914:	4b1a      	ldr	r3, [pc, #104]	; (8002980 <update_enc+0x1b0>)
+ 8002916:	681b      	ldr	r3, [r3, #0]
+ 8002918:	2200      	movs	r2, #0
+ 800291a:	625a      	str	r2, [r3, #36]	; 0x24
 				enc_value = enc_get_counter();
- 8002918:	f7ff f880 	bl	8001a1c <enc_get_counter>
- 800291c:	4603      	mov	r3, r0
- 800291e:	81fb      	strh	r3, [r7, #14]
+ 800291c:	f7ff f87e 	bl	8001a1c <enc_get_counter>
+ 8002920:	4603      	mov	r3, r0
+ 8002922:	81fb      	strh	r3, [r7, #14]
 				enc_value /= 4;
- 8002920:	89fb      	ldrh	r3, [r7, #14]
- 8002922:	089b      	lsrs	r3, r3, #2
- 8002924:	81fb      	strh	r3, [r7, #14]
+ 8002924:	89fb      	ldrh	r3, [r7, #14]
+ 8002926:	089b      	lsrs	r3, r3, #2
+ 8002928:	81fb      	strh	r3, [r7, #14]
 			if(enc_value == 0)
- 8002926:	89fb      	ldrh	r3, [r7, #14]
- 8002928:	2b00      	cmp	r3, #0
- 800292a:	d102      	bne.n	8002932 <update_enc+0x162>
+ 800292a:	89fb      	ldrh	r3, [r7, #14]
+ 800292c:	2b00      	cmp	r3, #0
+ 800292e:	d102      	bne.n	8002936 <update_enc+0x166>
 				curr_position->TL_position = DENSITY_PLA;
- 800292c:	687b      	ldr	r3, [r7, #4]
- 800292e:	2202      	movs	r2, #2
- 8002930:	711a      	strb	r2, [r3, #4]
+ 8002930:	687b      	ldr	r3, [r7, #4]
+ 8002932:	2202      	movs	r2, #2
+ 8002934:	711a      	strb	r2, [r3, #4]
 			if(enc_value == 1)
- 8002932:	89fb      	ldrh	r3, [r7, #14]
- 8002934:	2b01      	cmp	r3, #1
- 8002936:	d102      	bne.n	800293e <update_enc+0x16e>
+ 8002936:	89fb      	ldrh	r3, [r7, #14]
+ 8002938:	2b01      	cmp	r3, #1
+ 800293a:	d102      	bne.n	8002942 <update_enc+0x172>
 				curr_position->TL_position = DENSITY_ABS;
- 8002938:	687b      	ldr	r3, [r7, #4]
- 800293a:	2203      	movs	r2, #3
- 800293c:	711a      	strb	r2, [r3, #4]
+ 800293c:	687b      	ldr	r3, [r7, #4]
+ 800293e:	2203      	movs	r2, #3
+ 8002940:	711a      	strb	r2, [r3, #4]
 			if(enc_value == 2)
- 800293e:	89fb      	ldrh	r3, [r7, #14]
- 8002940:	2b02      	cmp	r3, #2
- 8002942:	d117      	bne.n	8002974 <update_enc+0x1a4>
+ 8002942:	89fb      	ldrh	r3, [r7, #14]
+ 8002944:	2b02      	cmp	r3, #2
+ 8002946:	d117      	bne.n	8002978 <update_enc+0x1a8>
 				curr_position->TL_position = DENSITY_PETG;
- 8002944:	687b      	ldr	r3, [r7, #4]
- 8002946:	2204      	movs	r2, #4
- 8002948:	711a      	strb	r2, [r3, #4]
+ 8002948:	687b      	ldr	r3, [r7, #4]
+ 800294a:	2204      	movs	r2, #4
+ 800294c:	711a      	strb	r2, [r3, #4]
 }
- 800294a:	e013      	b.n	8002974 <update_enc+0x1a4>
+ 800294e:	e013      	b.n	8002978 <update_enc+0x1a8>
 		else if(curr_position->SL_position == SAMPLE_WEIGHT)
- 800294c:	687b      	ldr	r3, [r7, #4]
- 800294e:	789b      	ldrb	r3, [r3, #2]
- 8002950:	2b03      	cmp	r3, #3
- 8002952:	d103      	bne.n	800295c <update_enc+0x18c>
+ 8002950:	687b      	ldr	r3, [r7, #4]
+ 8002952:	789b      	ldrb	r3, [r3, #2]
+ 8002954:	2b03      	cmp	r3, #3
+ 8002956:	d103      	bne.n	8002960 <update_enc+0x190>
 			FC_struct.parameters.temp_weight = enc_value;
- 8002954:	4a0a      	ldr	r2, [pc, #40]	; (8002980 <update_enc+0x1b0>)
- 8002956:	89fb      	ldrh	r3, [r7, #14]
- 8002958:	81d3      	strh	r3, [r2, #14]
+ 8002958:	4a0a      	ldr	r2, [pc, #40]	; (8002984 <update_enc+0x1b4>)
+ 800295a:	89fb      	ldrh	r3, [r7, #14]
+ 800295c:	81d3      	strh	r3, [r2, #14]
 }
- 800295a:	e00b      	b.n	8002974 <update_enc+0x1a4>
+ 800295e:	e00b      	b.n	8002978 <update_enc+0x1a8>
 		else if(curr_position->SL_position == QUANTITY)
- 800295c:	687b      	ldr	r3, [r7, #4]
- 800295e:	789b      	ldrb	r3, [r3, #2]
- 8002960:	2b04      	cmp	r3, #4
- 8002962:	d107      	bne.n	8002974 <update_enc+0x1a4>
+ 8002960:	687b      	ldr	r3, [r7, #4]
+ 8002962:	789b      	ldrb	r3, [r3, #2]
+ 8002964:	2b04      	cmp	r3, #4
+ 8002966:	d107      	bne.n	8002978 <update_enc+0x1a8>
 			FC_struct.parameters.temp_qty_increment = enc_value;
- 8002964:	89fb      	ldrh	r3, [r7, #14]
- 8002966:	b2da      	uxtb	r2, r3
- 8002968:	4b05      	ldr	r3, [pc, #20]	; (8002980 <update_enc+0x1b0>)
- 800296a:	75da      	strb	r2, [r3, #23]
+ 8002968:	89fb      	ldrh	r3, [r7, #14]
+ 800296a:	b2da      	uxtb	r2, r3
+ 800296c:	4b05      	ldr	r3, [pc, #20]	; (8002984 <update_enc+0x1b4>)
+ 800296e:	75da      	strb	r2, [r3, #23]
 			FC_struct.parameters.temp_qty = FC_struct.parameters.temp_qty_increment;
- 800296c:	4b04      	ldr	r3, [pc, #16]	; (8002980 <update_enc+0x1b0>)
- 800296e:	7dda      	ldrb	r2, [r3, #23]
- 8002970:	4b03      	ldr	r3, [pc, #12]	; (8002980 <update_enc+0x1b0>)
- 8002972:	759a      	strb	r2, [r3, #22]
+ 8002970:	4b04      	ldr	r3, [pc, #16]	; (8002984 <update_enc+0x1b4>)
+ 8002972:	7dda      	ldrb	r2, [r3, #23]
+ 8002974:	4b03      	ldr	r3, [pc, #12]	; (8002984 <update_enc+0x1b4>)
+ 8002976:	759a      	strb	r2, [r3, #22]
 }
- 8002974:	bf00      	nop
- 8002976:	3710      	adds	r7, #16
- 8002978:	46bd      	mov	sp, r7
- 800297a:	bd80      	pop	{r7, pc}
- 800297c:	200005d0 	.word	0x200005d0
- 8002980:	20000528 	.word	0x20000528
+ 8002978:	bf00      	nop
+ 800297a:	3710      	adds	r7, #16
+ 800297c:	46bd      	mov	sp, r7
+ 800297e:	bd80      	pop	{r7, pc}
+ 8002980:	200005d0 	.word	0x200005d0
+ 8002984:	20000528 	.word	0x20000528
 
-08002984 <clear_screen>:
+08002988 <clear_screen>:
 
 
 void clear_screen()
 {
- 8002984:	b580      	push	{r7, lr}
- 8002986:	af00      	add	r7, sp, #0
+ 8002988:	b580      	push	{r7, lr}
+ 800298a:	af00      	add	r7, sp, #0
 	ST7920_GraphicMode(1);
- 8002988:	2001      	movs	r0, #1
- 800298a:	f7fe fce9 	bl	8001360 <ST7920_GraphicMode>
+ 800298c:	2001      	movs	r0, #1
+ 800298e:	f7fe fce7 	bl	8001360 <ST7920_GraphicMode>
 	ST7920_Clear();
- 800298e:	f7fe fd9b 	bl	80014c8 <ST7920_Clear>
+ 8002992:	f7fe fd99 	bl	80014c8 <ST7920_Clear>
 	ST7920_GraphicMode(0);
- 8002992:	2000      	movs	r0, #0
- 8002994:	f7fe fce4 	bl	8001360 <ST7920_GraphicMode>
+ 8002996:	2000      	movs	r0, #0
+ 8002998:	f7fe fce2 	bl	8001360 <ST7920_GraphicMode>
 	ST7920_Clear();
- 8002998:	f7fe fd96 	bl	80014c8 <ST7920_Clear>
+ 800299c:	f7fe fd94 	bl	80014c8 <ST7920_Clear>
 }
- 800299c:	bf00      	nop
- 800299e:	bd80      	pop	{r7, pc}
+ 80029a0:	bf00      	nop
+ 80029a2:	bd80      	pop	{r7, pc}
 
-080029a0 <default_screen>:
+080029a4 <default_screen>:
 
 void default_screen()
 {
- 80029a0:	b580      	push	{r7, lr}
- 80029a2:	af00      	add	r7, sp, #0
+ 80029a4:	b580      	push	{r7, lr}
+ 80029a6:	af00      	add	r7, sp, #0
 	ST7920_SendString(0,0,"FILAMENT CUTTER");
- 80029a4:	4a10      	ldr	r2, [pc, #64]	; (80029e8 <default_screen+0x48>)
- 80029a6:	2100      	movs	r1, #0
- 80029a8:	2000      	movs	r0, #0
- 80029aa:	f7fe fc95 	bl	80012d8 <ST7920_SendString>
+ 80029a8:	4a10      	ldr	r2, [pc, #64]	; (80029ec <default_screen+0x48>)
+ 80029aa:	2100      	movs	r1, #0
+ 80029ac:	2000      	movs	r0, #0
+ 80029ae:	f7fe fc93 	bl	80012d8 <ST7920_SendString>
 	ST7920_GraphicMode(1);
- 80029ae:	2001      	movs	r0, #1
- 80029b0:	f7fe fcd6 	bl	8001360 <ST7920_GraphicMode>
+ 80029b2:	2001      	movs	r0, #1
+ 80029b4:	f7fe fcd4 	bl	8001360 <ST7920_GraphicMode>
 	ST7920_Clear();
- 80029b4:	f7fe fd88 	bl	80014c8 <ST7920_Clear>
+ 80029b8:	f7fe fd86 	bl	80014c8 <ST7920_Clear>
 	DrawRectangle(0, 0, 127, 14);
- 80029b8:	230e      	movs	r3, #14
- 80029ba:	227f      	movs	r2, #127	; 0x7f
- 80029bc:	2100      	movs	r1, #0
- 80029be:	2000      	movs	r0, #0
- 80029c0:	f7fe feec 	bl	800179c <DrawRectangle>
+ 80029bc:	230e      	movs	r3, #14
+ 80029be:	227f      	movs	r2, #127	; 0x7f
+ 80029c0:	2100      	movs	r1, #0
+ 80029c2:	2000      	movs	r0, #0
+ 80029c4:	f7fe feea 	bl	800179c <DrawRectangle>
 	ST7920_Update();
- 80029c4:	f7fe fd76 	bl	80014b4 <ST7920_Update>
+ 80029c8:	f7fe fd74 	bl	80014b4 <ST7920_Update>
 	ST7920_GraphicMode(0);
- 80029c8:	2000      	movs	r0, #0
- 80029ca:	f7fe fcc9 	bl	8001360 <ST7920_GraphicMode>
+ 80029cc:	2000      	movs	r0, #0
+ 80029ce:	f7fe fcc7 	bl	8001360 <ST7920_GraphicMode>
 	ST7920_SendString(1,0,"1.Settings");
- 80029ce:	4a07      	ldr	r2, [pc, #28]	; (80029ec <default_screen+0x4c>)
- 80029d0:	2100      	movs	r1, #0
- 80029d2:	2001      	movs	r0, #1
- 80029d4:	f7fe fc80 	bl	80012d8 <ST7920_SendString>
+ 80029d2:	4a07      	ldr	r2, [pc, #28]	; (80029f0 <default_screen+0x4c>)
+ 80029d4:	2100      	movs	r1, #0
+ 80029d6:	2001      	movs	r0, #1
+ 80029d8:	f7fe fc7e 	bl	80012d8 <ST7920_SendString>
 	//ST7920_SendString(3,0,"STOP");
 	ST7920_SendString(3,5," START");
- 80029d8:	4a05      	ldr	r2, [pc, #20]	; (80029f0 <default_screen+0x50>)
- 80029da:	2105      	movs	r1, #5
- 80029dc:	2003      	movs	r0, #3
- 80029de:	f7fe fc7b 	bl	80012d8 <ST7920_SendString>
+ 80029dc:	4a05      	ldr	r2, [pc, #20]	; (80029f4 <default_screen+0x50>)
+ 80029de:	2105      	movs	r1, #5
+ 80029e0:	2003      	movs	r0, #3
+ 80029e2:	f7fe fc79 	bl	80012d8 <ST7920_SendString>
 
 }
- 80029e2:	bf00      	nop
- 80029e4:	bd80      	pop	{r7, pc}
  80029e6:	bf00      	nop
- 80029e8:	080086a8 	.word	0x080086a8
- 80029ec:	080086b8 	.word	0x080086b8
- 80029f0:	080086c4 	.word	0x080086c4
+ 80029e8:	bd80      	pop	{r7, pc}
+ 80029ea:	bf00      	nop
+ 80029ec:	080086a8 	.word	0x080086a8
+ 80029f0:	080086b8 	.word	0x080086b8
+ 80029f4:	080086c4 	.word	0x080086c4
 
-080029f4 <settings_screen>:
+080029f8 <settings_screen>:
 
 
 
 void settings_screen()
 {
- 80029f4:	b580      	push	{r7, lr}
- 80029f6:	af00      	add	r7, sp, #0
+ 80029f8:	b580      	push	{r7, lr}
+ 80029fa:	af00      	add	r7, sp, #0
 	ST7920_SendString(0,0,"1.Diameter");
- 80029f8:	4a0d      	ldr	r2, [pc, #52]	; (8002a30 <settings_screen+0x3c>)
- 80029fa:	2100      	movs	r1, #0
- 80029fc:	2000      	movs	r0, #0
- 80029fe:	f7fe fc6b 	bl	80012d8 <ST7920_SendString>
+ 80029fc:	4a0d      	ldr	r2, [pc, #52]	; (8002a34 <settings_screen+0x3c>)
+ 80029fe:	2100      	movs	r1, #0
+ 8002a00:	2000      	movs	r0, #0
+ 8002a02:	f7fe fc69 	bl	80012d8 <ST7920_SendString>
 	ST7920_SendString(1,0,"2.Density");
- 8002a02:	4a0c      	ldr	r2, [pc, #48]	; (8002a34 <settings_screen+0x40>)
- 8002a04:	2100      	movs	r1, #0
- 8002a06:	2001      	movs	r0, #1
- 8002a08:	f7fe fc66 	bl	80012d8 <ST7920_SendString>
+ 8002a06:	4a0c      	ldr	r2, [pc, #48]	; (8002a38 <settings_screen+0x40>)
+ 8002a08:	2100      	movs	r1, #0
+ 8002a0a:	2001      	movs	r0, #1
+ 8002a0c:	f7fe fc64 	bl	80012d8 <ST7920_SendString>
 	ST7920_SendString(2,0,"3.Weight");
- 8002a0c:	4a0a      	ldr	r2, [pc, #40]	; (8002a38 <settings_screen+0x44>)
- 8002a0e:	2100      	movs	r1, #0
- 8002a10:	2002      	movs	r0, #2
- 8002a12:	f7fe fc61 	bl	80012d8 <ST7920_SendString>
+ 8002a10:	4a0a      	ldr	r2, [pc, #40]	; (8002a3c <settings_screen+0x44>)
+ 8002a12:	2100      	movs	r1, #0
+ 8002a14:	2002      	movs	r0, #2
+ 8002a16:	f7fe fc5f 	bl	80012d8 <ST7920_SendString>
 	ST7920_SendString(3,0,"4.QTY");
- 8002a16:	4a09      	ldr	r2, [pc, #36]	; (8002a3c <settings_screen+0x48>)
- 8002a18:	2100      	movs	r1, #0
- 8002a1a:	2003      	movs	r0, #3
- 8002a1c:	f7fe fc5c 	bl	80012d8 <ST7920_SendString>
+ 8002a1a:	4a09      	ldr	r2, [pc, #36]	; (8002a40 <settings_screen+0x48>)
+ 8002a1c:	2100      	movs	r1, #0
+ 8002a1e:	2003      	movs	r0, #3
+ 8002a20:	f7fe fc5a 	bl	80012d8 <ST7920_SendString>
 	ST7920_SendString(3,5,"5.BACK");
- 8002a20:	4a07      	ldr	r2, [pc, #28]	; (8002a40 <settings_screen+0x4c>)
- 8002a22:	2105      	movs	r1, #5
- 8002a24:	2003      	movs	r0, #3
- 8002a26:	f7fe fc57 	bl	80012d8 <ST7920_SendString>
+ 8002a24:	4a07      	ldr	r2, [pc, #28]	; (8002a44 <settings_screen+0x4c>)
+ 8002a26:	2105      	movs	r1, #5
+ 8002a28:	2003      	movs	r0, #3
+ 8002a2a:	f7fe fc55 	bl	80012d8 <ST7920_SendString>
 
 }
- 8002a2a:	bf00      	nop
- 8002a2c:	bd80      	pop	{r7, pc}
  8002a2e:	bf00      	nop
- 8002a30:	080086cc 	.word	0x080086cc
- 8002a34:	080086d8 	.word	0x080086d8
- 8002a38:	080086e4 	.word	0x080086e4
- 8002a3c:	080086f0 	.word	0x080086f0
- 8002a40:	080086f8 	.word	0x080086f8
- 8002a44:	00000000 	.word	0x00000000
+ 8002a30:	bd80      	pop	{r7, pc}
+ 8002a32:	bf00      	nop
+ 8002a34:	080086cc 	.word	0x080086cc
+ 8002a38:	080086d8 	.word	0x080086d8
+ 8002a3c:	080086e4 	.word	0x080086e4
+ 8002a40:	080086f0 	.word	0x080086f0
+ 8002a44:	080086f8 	.word	0x080086f8
 
 08002a48 <diameter_screen>:
 
@@ -5967,7 +5959,7 @@ void weight_screen_update()
  8002c46:	d016      	beq.n	8002c76 <weight_screen_update+0x42>
 	{
 		clear_screen();
- 8002c48:	f7ff fe9c 	bl	8002984 <clear_screen>
+ 8002c48:	f7ff fe9e 	bl	8002988 <clear_screen>
 		weight_screen();
  8002c4c:	f7ff ffe6 	bl	8002c1c <weight_screen>
 
@@ -6071,7 +6063,7 @@ void quantity_screen_update()
  8002ce8:	d015      	beq.n	8002d16 <quantity_screen_update+0x3e>
 	{
 		clear_screen();
- 8002cea:	f7ff fe4b 	bl	8002984 <clear_screen>
+ 8002cea:	f7ff fe4d 	bl	8002988 <clear_screen>
 		quantity_screen();
  8002cee:	f7ff ffe7 	bl	8002cc0 <quantity_screen>
 
