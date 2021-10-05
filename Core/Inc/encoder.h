@@ -36,6 +36,7 @@ typedef struct encoder_button
 	uint32_t 				debounce_time;
 	BTN_STATE				BTN_state;
 
+	uint8_t 				prev_enc_value;
 	ENCButtonPressed 		ButtonPressed;
 
 }encoder_button;

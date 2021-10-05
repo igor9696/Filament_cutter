@@ -203,7 +203,6 @@ void HAL_LPTIM_AutoReloadMatchCallback(LPTIM_HandleTypeDef *hlptim)
 	if(FC_struct.parameters.current_qty == (FC_struct.parameters.target_qty - 1))
 	{
 		//cursor_pos.FL_position = DEFAULT;
-
 	}
 
 	CUTTING_PROCESS_FLAG = 0;

@@ -49,10 +49,7 @@ typedef enum third_layer
 	DENSITY_PLA,
 	DENSITY_ABS,
 	DENSITY_PETG,
-	WEIGHT_5g,
-	WEIGHT_25g,
-	WEIGHT_50g,
-	WEIGHT_100g,
+	WEIGHT,
 	QTY,
 
 }third_layer;
@@ -84,6 +81,7 @@ void settings_screen();
 void diameter_screen();
 void density_screen();
 void weight_screen();
+void weight_screen_update();
 void active_start_screen();
 void quantity_screen();
 void quantity_screen_update();

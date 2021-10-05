@@ -37,11 +37,16 @@ typedef struct FC_parameters
 	float 					filament_density;
 	float		 			filament_diameter;
 	uint16_t 				target_weight;
+	uint16_t				temp_weight;
+
 	uint8_t 				sample_quantities;
 	uint16_t				current_length_cm;
+
 	volatile uint8_t 		current_qty;
 	uint8_t 				target_qty;
 	uint8_t					temp_qty;
+	uint8_t					temp_qty_increment;
+
 	uint8_t					ACTIVE_START_FLAG;
 
 }FC_parameters;
