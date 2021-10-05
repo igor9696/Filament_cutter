@@ -42,6 +42,7 @@ typedef struct FC_parameters
 	volatile uint8_t 		current_qty;
 	uint8_t 				target_qty;
 	uint8_t					temp_qty;
+	uint8_t					ACTIVE_START_FLAG;
 
 }FC_parameters;
 

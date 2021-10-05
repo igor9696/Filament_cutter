@@ -380,7 +380,7 @@ void update_enc(cursor_position* curr_position)
 	if(curr_position->current_layer == FIRST_LAYER)
 	{
 
-		if(FC_struct.parameters.current_qty == FC_struct.parameters.target_qty)
+		if(!FC_struct.parameters.ACTIVE_START_FLAG)
 		{
 
 			if((enc_value >=0) & (enc_value < 4))
@@ -510,7 +510,13 @@ void update_enc(cursor_position* curr_position)
 }
 
 
-
+void clear_screen()
+{
+	ST7920_GraphicMode(1);
+	ST7920_Clear();
+	ST7920_GraphicMode(0);
+	ST7920_Clear();
+}
 
 void default_screen()
 {

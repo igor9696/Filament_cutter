@@ -121,6 +121,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		// START pressed
 		else if(cursor_pos->FL_position == START)
 		{
+			FC_struct.parameters.ACTIVE_START_FLAG = 1;
 			FC_struct.mode = EXTRUDE;
 			cursor_pos->FL_position = ACTIVE_START;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
@@ -134,7 +135,9 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 			EXTRUDE_PROCESS_FLAG = 0;
 			CUTTING_PROCESS_FLAG = 0;
+			FC_struct.parameters.ACTIVE_START_FLAG = 0;
 
+			FC_struct.parameters.target_qty = FC_struct.parameters.current_qty;
 			FC_struct.mode = STANDBY;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			cursor_pos->FL_position = DEFAULT;
@@ -174,6 +177,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = QTY;
+			clear_screen();
+			quantity_screen();
 		}
 
 	}
@@ -255,6 +260,10 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			FC_struct.parameters.current_qty = FC_struct.parameters.temp_qty - 1;
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = QUANTITY;
+
+			clear_screen();
+			settings_screen();
+
 		}
 
 
