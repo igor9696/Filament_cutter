@@ -125,6 +125,7 @@ void stepper_extrude_weight(stepper_motor *motor)
 		EXTRUDE_PROCESS_FLAG = 1;
 		uint32_t centimeters;
 		centimeters = stepper_grams_to_centimeters(motor, FC_struct.parameters.target_weight, FC_struct.parameters.filament_diameter, FC_struct.parameters.filament_density);
+		FC_struct.parameters.target_length_cm = centimeters;
 		stepper_centimeters_to_rotations(motor, centimeters, 80, CW);
 	}
 

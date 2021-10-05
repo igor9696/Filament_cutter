@@ -86,5 +86,6 @@ void active_start_screen();
 void quantity_screen();
 void quantity_screen_update();
 void clear_screen();
+void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t target_qty);
 
 #endif /* INC_MENU_LCD_H_ */
