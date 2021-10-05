@@ -9,12 +9,14 @@
 #include "stdio.h"
 #include "L298_dc.h"
 #include "stepper.h"
+#include "menu_LCD.h"
 
 volatile filament_cutter FC_struct;
 FC_parameters FC_params;
 extern filament_cutter_mode prev_mode;
 extern stepper_motor extruder;
 extern dc_motor DC_motor;
+extern cursor_position cursor_pos;
 
 void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 {
@@ -23,6 +25,10 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 	FC_params.sample_quantities = 1;
 	FC_params.target_weight = Sample_weight_5g;
 	FC_params.current_length_cm = 0;
+	FC_params.target_qty = 0;
+	FC_params.current_qty = 0;
+	FC_params.ACTIVE_START_FLAG = 0;
+
 
 	FC_struct.motor = motor;
 	FC_struct.dc_motor = dc_motor;
@@ -34,16 +40,27 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 
 void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 {
-	if(FC_struct.mode != prev_mode)
-	{
-		prev_mode = FC_struct.mode;
-		printf("Mode: %d\n", prev_mode);
-	}
+//	if(FC_struct.mode != prev_mode)
+//	{
+//		prev_mode = FC_struct.mode;
+//		printf("Mode: %d\n", prev_mode);
+//	}
 
 	switch(FC_struct.mode)
 	{
 	case STANDBY:
 		DC_stop(&DC_motor);
+
+		if(FC_struct.parameters.current_qty != FC_struct.parameters.target_qty)
+		{
+			FC_struct.mode = EXTRUDE;
+			FC_struct.parameters.current_qty++;
+		}
+
+		else
+		{
+			FC_struct.parameters.ACTIVE_START_FLAG = 0;
+		}
 
 		break;
 
@@ -53,8 +70,8 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 		break;
 
 	case CUTTING:
-		DC_set_angle(dc_motor, 360, 50, RIGHT);
 		stepper_stop(&extruder);
+		DC_set_angle(dc_motor, 360, 50, RIGHT);
 
 		break;
 	}

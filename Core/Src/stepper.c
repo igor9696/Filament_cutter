@@ -120,7 +120,7 @@ void stepper_extrude_weight(stepper_motor *motor)
 {
 	if(EXTRUDE_PROCESS_FLAG == 0)
 	{
-		printf("Start Extrude\n");
+		//printf("Start Extrude\n");
 		CUTTING_PROCESS_FLAG = 0;
 		EXTRUDE_PROCESS_FLAG = 1;
 		uint32_t centimeters;

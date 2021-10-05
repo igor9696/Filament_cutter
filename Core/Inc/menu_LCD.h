@@ -8,6 +8,8 @@
 #ifndef INC_MENU_LCD_H_
 #define INC_MENU_LCD_H_
 
+#include "stdio.h"
+
 typedef enum layer
 {
 	FIRST_LAYER,
@@ -84,5 +86,7 @@ void density_screen();
 void weight_screen();
 void active_start_screen();
 void quantity_screen();
+void quantity_screen_update();
+void clear_screen();
 
 #endif /* INC_MENU_LCD_H_ */
