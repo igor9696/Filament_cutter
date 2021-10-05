@@ -13,7 +13,7 @@
 #include "stepper.h"
 #include "filament_cutter.h"
 
-static encoder_button enc_btn;
+encoder_button enc_btn;
 extern stepper_motor extruder;
 extern dc_motor DC_motor;
 extern filament_cutter FC_struct;
@@ -26,10 +26,11 @@ void encoder_init(GPIO_TypeDef* GPIO_BTN_PORT, uint16_t Button_Pin, uint32_t deb
 	enc_btn.debounce_time = debounce_time;
 	enc_btn.BTN_state = DEFA;
 	enc_btn.last_tick = 0;
+	enc_btn.prev_enc_value = 0;
 
 	ENC_Button_RegisterPressCallback(&ENC_Button_PressedTask);
 
-	__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 19);
+	__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 601);
 	HAL_TIM_Encoder_Start(_ENC_TIMER, TIM_CHANNEL_ALL);
 }
 
@@ -114,6 +115,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 	{
 		if(cursor_pos->FL_position == SETTINGS)
 		{
+			clear_screen();
+			settings_screen();
 			cursor_pos->current_layer = SECOND_LAYER;
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 		}
@@ -159,18 +162,22 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = DIAMETER_175;
+
 		}
 
 		else if(cursor_pos->SL_position == FIL_DEN)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = DENSITY_PLA;
+
 		}
 
 		else if(cursor_pos->SL_position == SAMPLE_WEIGHT)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
-			cursor_pos->TL_position = WEIGHT_5g;
+			cursor_pos->TL_position = WEIGHT;
+			clear_screen();
+			weight_screen();
 		}
 
 		else if(cursor_pos->SL_position == QUANTITY)
@@ -190,6 +197,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->SL_position = FIL_DIA;
 			FC_struct.parameters.filament_diameter = Filament_diameter_175;
+			clear_screen();
+			settings_screen();
 
 		}
 
@@ -198,6 +207,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->SL_position = FIL_DIA;
 			FC_struct.parameters.filament_diameter = Filament_diameter_285;
+			clear_screen();
+			settings_screen();
 		}
 
 		else if(cursor_pos->TL_position == DENSITY_PLA)
@@ -205,6 +216,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->SL_position = FIL_DEN;
 			FC_struct.parameters.filament_density = Filament_density_PLA;
+			clear_screen();
+			settings_screen();
 		}
 
 		else if(cursor_pos->TL_position == DENSITY_ABS)
@@ -212,7 +225,8 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->SL_position = FIL_DEN;
 			FC_struct.parameters.filament_density = Filament_density_ABS;
-
+			clear_screen();
+			settings_screen();
 		}
 
 		else if(cursor_pos->TL_position == DENSITY_PETG)
@@ -220,39 +234,18 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = FIL_DEN;
 			FC_struct.parameters.filament_density = Filament_density_PETG;
-
+			clear_screen();
+			settings_screen();
 		}
 
-		else if(cursor_pos->TL_position == WEIGHT_5g)
+		else if(cursor_pos->TL_position == WEIGHT)
 		{
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = SAMPLE_WEIGHT;
-			FC_struct.parameters.target_weight = Sample_weight_5g;
+			FC_struct.parameters.target_weight = FC_struct.parameters.temp_weight;
+			clear_screen();
+			settings_screen();
 		}
-
-		else if(cursor_pos->TL_position == WEIGHT_25g)
-		{
-			cursor_pos->current_layer = SECOND_LAYER;
-			cursor_pos->TL_position = SAMPLE_WEIGHT;
-			FC_struct.parameters.target_weight = Sample_weight_25g;
-
-		}
-
-		else if(cursor_pos->TL_position == WEIGHT_50g)
-		{
-			cursor_pos->current_layer = SECOND_LAYER;
-			cursor_pos->TL_position = SAMPLE_WEIGHT;
-			FC_struct.parameters.target_weight = Sample_weight_50g;
-
-		}
-
-		else if(cursor_pos->TL_position == WEIGHT_100g)
-		{
-			cursor_pos->current_layer = SECOND_LAYER;
-			cursor_pos->TL_position = SAMPLE_WEIGHT;
-			FC_struct.parameters.target_weight = Sample_weight_100g;
-		}
-
 
 		else if(cursor_pos->TL_position == QTY)
 		{

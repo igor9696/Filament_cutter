@@ -28,6 +28,8 @@ void Filament_Cutter_Init(stepper_motor *motor, dc_motor* dc_motor)
 	FC_params.target_qty = 0;
 	FC_params.current_qty = 0;
 	FC_params.ACTIVE_START_FLAG = 0;
+	FC_params.temp_qty_increment = 1;
+
 
 
 	FC_struct.motor = motor;
