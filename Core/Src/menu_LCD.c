@@ -608,11 +608,11 @@ void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t tar
 	char cm_current_percent[6];
 
 
-	FC_struct.parameters.current_length_cm = FC_struct.motor->slave_timer.htim->Instance->CNT / (FC_struct.motor->slave_timer.htim->Instance->ARR);
+	FC_struct.parameters.current_length_cm = (float)(FC_struct.motor->slave_timer.htim->Instance->CNT) / (FC_struct.motor->slave_timer.htim->Instance->ARR);
 	FC_struct.parameters.current_length_cm = truncf(FC_struct.parameters.current_length_cm * 100);
 
 
-	if(!((uint8_t)FC_struct.parameters.current_length_cm % 2))
+	if((uint8_t)FC_struct.parameters.current_length_cm % 2)
 	{
 		qty_prev_value = FC_struct.parameters.current_qty;
 
@@ -622,7 +622,7 @@ void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t tar
 		sprintf(qty_target_value, "%d", FC_struct.parameters.target_qty + 1);
 		sprintf(qty_current_value, "%d", (FC_struct.parameters.current_qty + 1));
 		sprintf(weight_target_value, "%d", FC_struct.parameters.target_weight);
-		sprintf(cm_current_percent, "%d", (uint8_t)current_cm_perc);
+		sprintf(cm_current_percent, "%d", (uint8_t)FC_struct.parameters.current_length_cm);
 
 
 		ST7920_SendString(2, 7, qty_target_value);
