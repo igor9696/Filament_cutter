@@ -162,18 +162,21 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = DIAMETER_175;
-
+			clear_screen();
+			diameter_screen();
 		}
 
 		else if(cursor_pos->SL_position == FIL_DEN)
 		{
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = DENSITY_PLA;
-
+			clear_screen();
+			density_screen();
 		}
 
 		else if(cursor_pos->SL_position == SAMPLE_WEIGHT)
 		{
+			__HAL_TIM_SET_COUNTER(_ENC_TIMER, FC_struct.parameters.target_weight);
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = WEIGHT;
 			clear_screen();
@@ -182,6 +185,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 		else if(cursor_pos->SL_position == QUANTITY)
 		{
+			__HAL_TIM_SET_COUNTER(_ENC_TIMER, FC_struct.parameters.target_qty);
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = QTY;
 			clear_screen();
@@ -242,6 +246,7 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 		{
 			cursor_pos->current_layer = SECOND_LAYER;
 			cursor_pos->TL_position = SAMPLE_WEIGHT;
+
 			FC_struct.parameters.target_weight = FC_struct.parameters.temp_weight;
 			clear_screen();
 			settings_screen();
