@@ -24,11 +24,7 @@ void update_first_layer(cursor_position* curr_position)
 		{
 			case DEFAULT:
 			DC_stop(&DC_motor);
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
+			clear_screen();
 			default_screen();
 			break;
 
@@ -43,17 +39,14 @@ void update_first_layer(cursor_position* curr_position)
 			break;
 
 			case ACTIVE_START:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			active_start_screen();
-
 			break;
 
-
 			case STOP:
+			clear_screen();
 			active_start_screen();
+			//start_screen_update(FC_struct.parameters.target_weight, FC_struct.parameters.current_qty, FC_struct.parameters.target_qty);
 
 			// highlighting
 			ST7920_GraphicMode(1);
@@ -90,12 +83,7 @@ void update_second_layer(cursor_position* curr_position)
 		switch(curr_position->SL_position)
 		{
 		case FIL_DIA:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
-
+			clear_screen();
 			settings_screen();
 
 			// highlighting
@@ -107,27 +95,18 @@ void update_second_layer(cursor_position* curr_position)
 			break;
 
 		case FIL_DEN:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
+			settings_screen();
 
 			// highlighting
-			settings_screen();
 			ST7920_GraphicMode(1);
 			DrawFilledRectangle(0, 15, 79, 15);
 			ST7920_Update();
 			ST7920_GraphicMode(0);
-
 			break;
 
 		case SAMPLE_WEIGHT:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
-
+			clear_screen();
 			settings_screen();
 
 			ST7920_GraphicMode(1);
@@ -137,12 +116,7 @@ void update_second_layer(cursor_position* curr_position)
 			break;
 
 		case QUANTITY:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
-
+			clear_screen();
 			settings_screen();
 
 			ST7920_GraphicMode(1);
@@ -152,12 +126,7 @@ void update_second_layer(cursor_position* curr_position)
 			break;
 
 		case BACK:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
-
+			clear_screen();
 			settings_screen();
 
 			ST7920_GraphicMode(1);
@@ -165,9 +134,7 @@ void update_second_layer(cursor_position* curr_position)
 			ST7920_Update();
 			ST7920_GraphicMode(0);
 
-
 		default:
-
 			break;
 		}
 
@@ -184,10 +151,7 @@ void update_third_layer(cursor_position* curr_position)
 		switch(curr_position->TL_position)
 		{
 		case DIAMETER_175:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			diameter_screen();
 
 			ST7920_GraphicMode(1);
@@ -197,10 +161,7 @@ void update_third_layer(cursor_position* curr_position)
 			break;
 
 		case DIAMETER_285:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			diameter_screen();
 
 			ST7920_GraphicMode(1);
@@ -210,10 +171,7 @@ void update_third_layer(cursor_position* curr_position)
 			break;
 
 		case DENSITY_PLA:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			density_screen();
 
 			ST7920_GraphicMode(1);
@@ -223,10 +181,7 @@ void update_third_layer(cursor_position* curr_position)
 			break;
 
 		case DENSITY_ABS:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			density_screen();
 
 			ST7920_GraphicMode(1);
@@ -236,10 +191,7 @@ void update_third_layer(cursor_position* curr_position)
 			break;
 
 		case DENSITY_PETG:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			density_screen();
 
 			ST7920_GraphicMode(1);
@@ -249,22 +201,13 @@ void update_third_layer(cursor_position* curr_position)
 			break;
 
 		case WEIGHT:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
+			clear_screen();
 			weight_screen();
-
 			break;
 
 		case QTY:
-			ST7920_GraphicMode(1);
-			ST7920_Clear();
-			ST7920_GraphicMode(0);
-			ST7920_Clear();
-
-			quantity_screen(FC_struct.parameters.target_qty);
-
+			clear_screen();
+			quantity_screen();
 			break;
 
 		default:
@@ -290,26 +233,21 @@ void menu_update(cursor_position* curr_position)
 
 		update_first_layer(curr_position);
 
-
 		if(curr_position->FL_position == ACTIVE_START)
 		{
 			start_screen_update(FC_struct.parameters.target_weight, FC_struct.parameters.current_qty, FC_struct.parameters.target_qty);
 		}
 
-
 	}
-
 
 	else if(curr_position->current_layer == SECOND_LAYER)
 	{
 		update_second_layer(curr_position);
-
 	}
 
 	else if(curr_position->current_layer == THIRD_LAYER)
 	{
 		update_third_layer(curr_position);
-
 		// print temporary quantity value on screen
 		if(curr_position->TL_position == QTY)
 		{
@@ -321,7 +259,6 @@ void menu_update(cursor_position* curr_position)
 			weight_screen_update();
 		}
 	}
-
 }
 
 
@@ -348,7 +285,8 @@ void update_enc(cursor_position* curr_position)
 
 	if(curr_position->current_layer == FIRST_LAYER)
 	{
-		if(enc_get_counter() > 20)
+		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 12);
+		if(enc_get_counter() > 12)
 		{
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			enc_value = enc_get_counter();
@@ -373,20 +311,26 @@ void update_enc(cursor_position* curr_position)
 			}
 		}
 
-		else if (enc_value == 4)
+		else if (enc_value > 1)
 		{
 			curr_position->FL_position = STOP;
 		}
-
 	}
 
 	else if(curr_position->current_layer == SECOND_LAYER)
 	{
-		if(enc_get_counter() > 20)
+		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 18);
+
+		if(enc_get_counter() > 18)
 		{
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			enc_value = enc_get_counter();
 			enc_value /= 4;
+		}
+
+		if(enc_value == 0)
+		{
+			curr_position->SL_position = BACK;
 		}
 
 		if(enc_value == 1)
@@ -409,21 +353,16 @@ void update_enc(cursor_position* curr_position)
 			curr_position->SL_position = QUANTITY;
 		}
 
-		if(enc_value == 0)
-		{
-			curr_position->SL_position = BACK;
-		}
-
-
 	}
 
 	else if(curr_position->current_layer == THIRD_LAYER)
 	{
 		if(curr_position->SL_position == FIL_DIA)
 		{
-			if(enc_get_counter() > 20)
+			if(enc_get_counter() > 8)
 			{
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
+				__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 8);
 				enc_value = enc_get_counter();
 				enc_value /= 4;
 			}
@@ -441,7 +380,8 @@ void update_enc(cursor_position* curr_position)
 
 		else if(curr_position->SL_position == FIL_DEN)
 		{
-			if(enc_get_counter() > 20)
+			__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 12);
+			if(enc_get_counter() > 12)
 			{
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 				enc_value = enc_get_counter();
@@ -467,22 +407,40 @@ void update_enc(cursor_position* curr_position)
 
 		else if(curr_position->SL_position == SAMPLE_WEIGHT)
 		{
-			FC_struct.parameters.temp_weight = enc_value;
+			__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 600);
+
+			if(enc_value == 0)
+			{
+				enc_value = 1;
+				FC_struct.parameters.temp_weight = enc_value;
+			}
+
+			else
+			{
+				FC_struct.parameters.temp_weight = enc_value;
+			}
 		}
 
 
 		else if(curr_position->SL_position == QUANTITY)
 		{
-			FC_struct.parameters.temp_qty_increment = enc_value;
-			FC_struct.parameters.temp_qty = FC_struct.parameters.temp_qty_increment;
+			__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 101);
+
+			if(enc_value == 0)
+			{
+				enc_value = 1;
+				FC_struct.parameters.temp_qty = enc_value;
+			}
+
+			else
+			{
+				FC_struct.parameters.temp_qty = enc_value;
+			}
 		}
-
-
 	}
 
 
 }
-
 
 void clear_screen()
 {
@@ -501,9 +459,7 @@ void default_screen()
 	ST7920_Update();
 	ST7920_GraphicMode(0);
 	ST7920_SendString(1,0,"1.Settings");
-	//ST7920_SendString(3,0,"STOP");
 	ST7920_SendString(3,5," START");
-
 }
 
 
@@ -527,7 +483,7 @@ void diameter_screen()
 		ST7920_SendString(1, 0, "2.85 mm");
 	}
 
-	if(FC_struct.parameters.filament_density == Filament_diameter_285)
+	else
 	{
 		ST7920_SendString(0, 0, "1.75 mm");
 		ST7920_SendString(1, 0, "2.85 mm <<");
@@ -563,7 +519,6 @@ void density_screen()
 void weight_screen()
 {
 	ST7920_SendString(0, 0, "Weight[g]: ");
-
 }
 
 
@@ -590,32 +545,21 @@ void active_start_screen()
 	ST7920_SendString(1, 0, "   %");
 	ST7920_SendString(2, 0, "W: ");
 	ST7920_SendString(2, 3, "QTY:  / ");
-
-
 	ST7920_SendString(3, 3, "STOP");
-
 }
 
 void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t target_qty)
 {
-	static uint8_t qty_prev_value;
-	float current_cm_perc;
-
 	char qty_target_value[4];
 	char qty_current_value[4];
 	char weight_target_value[5];
-
 	char cm_current_percent[6];
-
 
 	FC_struct.parameters.current_length_cm = (float)(FC_struct.motor->slave_timer.htim->Instance->CNT) / (FC_struct.motor->slave_timer.htim->Instance->ARR);
 	FC_struct.parameters.current_length_cm = truncf(FC_struct.parameters.current_length_cm * 100);
 
-
 	if((uint8_t)FC_struct.parameters.current_length_cm % 2)
 	{
-		qty_prev_value = FC_struct.parameters.current_qty;
-
 		clear_screen();
 		active_start_screen();
 
@@ -624,13 +568,11 @@ void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t tar
 		sprintf(weight_target_value, "%d", FC_struct.parameters.target_weight);
 		sprintf(cm_current_percent, "%d", (uint8_t)FC_struct.parameters.current_length_cm);
 
-
 		ST7920_SendString(2, 7, qty_target_value);
 		ST7920_SendString(2, 5, qty_current_value);
 		ST7920_SendString(2, 1, weight_target_value);
 		ST7920_SendString(1, 0, cm_current_percent);
 	}
-
 }
 
 
