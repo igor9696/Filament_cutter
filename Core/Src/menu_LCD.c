@@ -49,7 +49,6 @@ void update_first_layer(cursor_position* curr_position)
 			ST7920_Clear();
 			active_start_screen();
 
-
 			break;
 
 
@@ -290,6 +289,14 @@ void menu_update(cursor_position* curr_position)
 	{
 
 		update_first_layer(curr_position);
+
+
+		if(curr_position->FL_position == ACTIVE_START)
+		{
+			start_screen_update(FC_struct.parameters.target_weight, FC_struct.parameters.current_qty, FC_struct.parameters.target_qty);
+		}
+
+
 	}
 
 
@@ -580,10 +587,52 @@ void weight_screen_update()
 void active_start_screen()
 {
 	ST7920_SendString(0, 0, "Working...");
-	ST7920_SendString(1, 0, "0/500 [cm]");
+	ST7920_SendString(1, 0, "   %");
+	ST7920_SendString(2, 0, "W: ");
+	ST7920_SendString(2, 3, "QTY:  / ");
+
+
 	ST7920_SendString(3, 3, "STOP");
 
 }
+
+void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t target_qty)
+{
+	static uint8_t qty_prev_value;
+	float current_cm_perc;
+
+	char qty_target_value[4];
+	char qty_current_value[4];
+	char weight_target_value[5];
+
+	char cm_current_percent[6];
+
+
+	FC_struct.parameters.current_length_cm = (float)(FC_struct.motor->slave_timer.htim->Instance->CNT) / (FC_struct.motor->slave_timer.htim->Instance->ARR);
+	FC_struct.parameters.current_length_cm = truncf(FC_struct.parameters.current_length_cm * 100);
+
+
+	if((uint8_t)FC_struct.parameters.current_length_cm % 2)
+	{
+		qty_prev_value = FC_struct.parameters.current_qty;
+
+		clear_screen();
+		active_start_screen();
+
+		sprintf(qty_target_value, "%d", FC_struct.parameters.target_qty + 1);
+		sprintf(qty_current_value, "%d", (FC_struct.parameters.current_qty + 1));
+		sprintf(weight_target_value, "%d", FC_struct.parameters.target_weight);
+		sprintf(cm_current_percent, "%d", (uint8_t)FC_struct.parameters.current_length_cm);
+
+
+		ST7920_SendString(2, 7, qty_target_value);
+		ST7920_SendString(2, 5, qty_current_value);
+		ST7920_SendString(2, 1, weight_target_value);
+		ST7920_SendString(1, 0, cm_current_percent);
+	}
+
+}
+
 
 
 void quantity_screen()

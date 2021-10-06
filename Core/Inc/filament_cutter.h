@@ -40,7 +40,8 @@ typedef struct FC_parameters
 	uint16_t				temp_weight;
 
 	uint8_t 				sample_quantities;
-	uint16_t				current_length_cm;
+	float					current_length_cm;
+	uint16_t				target_length_cm;
 
 	volatile uint8_t 		current_qty;
 	uint8_t 				target_qty;
