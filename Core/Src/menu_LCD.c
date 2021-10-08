@@ -47,7 +47,6 @@ void update_first_layer(cursor_position* curr_position)
 			clear_screen();
 			active_start_screen();
 			//start_screen_update(FC_struct.parameters.target_weight, FC_struct.parameters.current_qty, FC_struct.parameters.target_qty);
-
 			// highlighting
 			ST7920_GraphicMode(1);
 			DrawFilledRectangle(48, 50, 35, 16);
@@ -285,8 +284,8 @@ void update_enc(cursor_position* curr_position)
 
 	if(curr_position->current_layer == FIRST_LAYER)
 	{
-		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 12);
-		if(enc_get_counter() > 12)
+		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 11);
+		if(enc_get_counter() > 11)
 		{
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			enc_value = enc_get_counter();
@@ -319,9 +318,9 @@ void update_enc(cursor_position* curr_position)
 
 	else if(curr_position->current_layer == SECOND_LAYER)
 	{
-		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 18);
+		__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 19);
 
-		if(enc_get_counter() > 18)
+		if(enc_get_counter() > 19)
 		{
 			__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
 			enc_value = enc_get_counter();
@@ -359,10 +358,10 @@ void update_enc(cursor_position* curr_position)
 	{
 		if(curr_position->SL_position == FIL_DIA)
 		{
-			if(enc_get_counter() > 8)
+			if(enc_get_counter() > 7)
 			{
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
-				__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 8);
+				__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 7);
 				enc_value = enc_get_counter();
 				enc_value /= 4;
 			}
@@ -380,7 +379,7 @@ void update_enc(cursor_position* curr_position)
 
 		else if(curr_position->SL_position == FIL_DEN)
 		{
-			__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 12);
+			__HAL_TIM_SET_AUTORELOAD(_ENC_TIMER, 11);
 			if(enc_get_counter() > 12)
 			{
 				__HAL_TIM_SET_COUNTER(_ENC_TIMER, 0);
@@ -541,15 +540,29 @@ void weight_screen_update()
 
 void active_start_screen()
 {
+	char qty_target_value[4];
+	char qty_current_value[4];
+	char weight_target_value[5];
+
+	sprintf(qty_target_value, "%d", FC_struct.parameters.target_qty + 1);
+	sprintf(qty_current_value, "%d", (FC_struct.parameters.current_qty + 1));
+	sprintf(weight_target_value, "%d", FC_struct.parameters.target_weight);
+
+
 	ST7920_SendString(0, 0, "Working...");
 	ST7920_SendString(1, 0, "   %");
 	ST7920_SendString(2, 0, "W: ");
 	ST7920_SendString(2, 3, "QTY:  / ");
 	ST7920_SendString(3, 3, "STOP");
+	ST7920_SendString(2, 7, qty_target_value);
+	ST7920_SendString(2, 5, qty_current_value);
+	ST7920_SendString(2, 1, weight_target_value);
 }
 
 void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t target_qty)
 {
+	uint8_t percent_prev_value = 1;
+
 	char qty_target_value[4];
 	char qty_current_value[4];
 	char weight_target_value[5];
@@ -558,8 +571,9 @@ void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t tar
 	FC_struct.parameters.current_length_cm = (float)(FC_struct.motor->slave_timer.htim->Instance->CNT) / (FC_struct.motor->slave_timer.htim->Instance->ARR);
 	FC_struct.parameters.current_length_cm = truncf(FC_struct.parameters.current_length_cm * 100);
 
-	if((uint8_t)FC_struct.parameters.current_length_cm % 2)
+	if((((uint8_t)FC_struct.parameters.current_length_cm % 5) == 0) && (percent_prev_value != FC_struct.parameters.current_length_cm))
 	{
+		percent_prev_value = FC_struct.parameters.current_length_cm;
 		clear_screen();
 		active_start_screen();
 
