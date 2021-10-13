@@ -185,11 +185,12 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 		else if(cursor_pos->SL_position == QUANTITY)
 		{
-			__HAL_TIM_SET_COUNTER(_ENC_TIMER, FC_struct.parameters.target_qty);
 			cursor_pos->current_layer = THIRD_LAYER;
 			cursor_pos->TL_position = QTY;
 			clear_screen();
 			quantity_screen();
+			//__HAL_TIM_SET_COUNTER(_ENC_TIMER, FC_struct.parameters.target_qty);
+			FC_struct.parameters.temp_qty_last_val = FC_struct.parameters.target_qty;
 		}
 
 	}
@@ -261,7 +262,6 @@ void ENC_Button_PressedTask(cursor_position* cursor_pos)
 
 			clear_screen();
 			settings_screen();
-
 		}
 
 

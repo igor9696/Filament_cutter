@@ -237,6 +237,7 @@ void menu_update(cursor_position* curr_position)
 			start_screen_update(FC_struct.parameters.target_weight, FC_struct.parameters.current_qty, FC_struct.parameters.target_qty);
 		}
 
+
 	}
 
 	else if(curr_position->current_layer == SECOND_LAYER)
@@ -517,7 +518,15 @@ void density_screen()
 
 void weight_screen()
 {
+	char weight_value[4];
+	uint8_t weight_val_targ;
+	if(FC_struct.parameters.target_weight == 0) weight_val_targ = 1;
+	else weight_val_targ = FC_struct.parameters.target_weight;
+
+	sprintf(weight_value, "%d", weight_val_targ);
 	ST7920_SendString(0, 0, "Weight[g]: ");
+	ST7920_SendString(2, 0, "Prev weight: ");
+	ST7920_SendString(2, 6, weight_value);
 }
 
 
@@ -593,8 +602,15 @@ void start_screen_update(uint8_t target_weight, uint8_t current_qty, uint8_t tar
 
 void quantity_screen()
 {
-	ST7920_SendString(0, 0, "QTY: ");
+	char qty_value[4];
+	uint8_t qty_val_targ;
+	if(FC_struct.parameters.target_qty == 0) qty_val_targ = 1;
+	else qty_val_targ = FC_struct.parameters.target_qty;
 
+	sprintf(qty_value, "%d", qty_val_targ);
+	ST7920_SendString(0, 0, "QTY: ");
+	ST7920_SendString(2, 0, "PREV_QTY: ");
+	ST7920_SendString(2, 5, qty_value);
 }
 
 void quantity_screen_update()
