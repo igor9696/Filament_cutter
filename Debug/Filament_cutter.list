@@ -39,11 +39,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   00016c4e  00000000  00000000  00069482  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000dd832  00000000  00000000  000800d0  2**0
+ 18 .debug_str    000dd82e  00000000  00000000  000800d0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  0015d902  2**0
+ 19 .comment      00000053  00000000  00000000  0015d8fe  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000053c8  00000000  00000000  0015d958  2**2
+ 20 .debug_frame  000053c8  00000000  00000000  0015d954  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1242,7 +1242,7 @@ void DC_motor_encoder_Init(dc_motor *motor) {
 	HAL_LPTIM_Encoder_Start_IT(motor->encoder_timer, FULL_ROTATION_PULSE);
  8000f0c:	687b      	ldr	r3, [r7, #4]
  8000f0e:	699b      	ldr	r3, [r3, #24]
- 8000f10:	f241 1192 	movw	r1, #4498	; 0x1192
+ 8000f10:	f44f 5183 	mov.w	r1, #4192	; 0x1060
  8000f14:	4618      	mov	r0, r3
  8000f16:	f003 fb15 	bl	8004544 <HAL_LPTIM_Encoder_Start_IT>
 	/* Enable Autoreload match interrupt */
@@ -1640,9 +1640,9 @@ void DC_set_angle(dc_motor *motor, uint16_t angle, uint8_t speed, DC_direction D
  800117e:	4b12      	ldr	r3, [pc, #72]	; (80011c8 <DC_set_angle+0x74>)
  8001180:	2200      	movs	r2, #0
  8001182:	701a      	strb	r2, [r3, #0]
-		pulses_to_count = (angle * FULL_ROTATION_PULSE * 2) / 360;
+		pulses_to_count = (angle * FULL_ROTATION_PULSE) / 360;
  8001184:	887b      	ldrh	r3, [r7, #2]
- 8001186:	f242 3224 	movw	r2, #8996	; 0x2324
+ 8001186:	f44f 5283 	mov.w	r2, #4192	; 0x1060
  800118a:	fb02 f303 	mul.w	r3, r2, r3
  800118e:	4a0f      	ldr	r2, [pc, #60]	; (80011cc <DC_set_angle+0x78>)
  8001190:	fb82 1203 	smull	r1, r2, r2, r3
@@ -1660,6 +1660,7 @@ void DC_set_angle(dc_motor *motor, uint16_t angle, uint8_t speed, DC_direction D
  80011a8:	699b      	ldr	r3, [r3, #24]
  80011aa:	681b      	ldr	r3, [r3, #0]
  80011ac:	619a      	str	r2, [r3, #24]
+
 		DC_rotate(motor, DIR, speed);
  80011ae:	787a      	ldrb	r2, [r7, #1]
  80011b0:	783b      	ldrb	r3, [r7, #0]
@@ -3746,7 +3747,7 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
  8001e7c:	2b01      	cmp	r3, #1
  8001e7e:	d01a      	beq.n	8001eb6 <motors_update+0x56>
 		stepper_stop(&extruder);
-		DC_set_angle(dc_motor, 360, 60, RIGHT);
+		DC_set_angle(dc_motor, 360, 100, RIGHT);
 
 		break;
 	}
@@ -3797,9 +3798,9 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 		stepper_stop(&extruder);
  8001ec8:	480a      	ldr	r0, [pc, #40]	; (8001ef4 <motors_update+0x94>)
  8001eca:	f001 f867 	bl	8002f9c <stepper_stop>
-		DC_set_angle(dc_motor, 360, 60, RIGHT);
+		DC_set_angle(dc_motor, 360, 100, RIGHT);
  8001ece:	2300      	movs	r3, #0
- 8001ed0:	223c      	movs	r2, #60	; 0x3c
+ 8001ed0:	2264      	movs	r2, #100	; 0x64
  8001ed2:	f44f 71b4 	mov.w	r1, #360	; 0x168
  8001ed6:	6838      	ldr	r0, [r7, #0]
  8001ed8:	f7ff f93c 	bl	8001154 <DC_set_angle>

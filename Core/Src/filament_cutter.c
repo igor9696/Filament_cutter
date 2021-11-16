@@ -67,7 +67,7 @@ void motors_update(stepper_motor *motor, dc_motor* dc_motor)
 
 	case CUTTING:
 		stepper_stop(&extruder);
-		DC_set_angle(dc_motor, 360, 60, RIGHT);
+		DC_set_angle(dc_motor, 360, 100, RIGHT);
 
 		break;
 	}
